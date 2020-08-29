@@ -30,7 +30,8 @@ Plug 'fatih/vim-go', { 'tag': '*' }
 Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
 
 " Plugin outside ~/.vim/plugged with post-update hook
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+set rtp+=~/.fzf
+Plug 'junegunn/fzf.vim'
 
 " Gruvbox theme
 Plug 'morhetz/gruvbox'
@@ -47,16 +48,28 @@ Plug 'leafgarland/typescript-vim'
 
 Plug 'alvan/vim-closetag'
 
+Plug 'numkil/ag.nvim'
+
 " Initialize plugin system
 call plug#end()
 
 " SETTINGS
 colorscheme gruvbox
 highlight Normal ctermbg=black
-set smartindent
-set autoindent
+set smarttab
+set cindent
+set tabstop=2
+set shiftwidth=2
+" always uses spaces instead of tab characters
+set expandtab
 
-set expandtab shiftwidth=2 softtabstop=2 smarttab
+set number
+
+" Prefer rg > ag > ack
+" https://hackercodex.com/guide/vim-search-find-in-project/
+if executable('ag')
+  let g:ackprg = 'rg -S --no-heading --vimgrep'
+endif
 
 " VARIABLES
 
@@ -64,9 +77,14 @@ let g:python_host_prog = 'C:\Users\wguti\AppData\Local\Programs\Python\Python38\
 let g:python3_host_prog = 'C:\Users\wguti\AppData\Local\Programs\Python\Python38\python.exe'
 
 " coc extensions
-let g:coc_global_extensions = ['coc-tslint-plugin', 'coc-tsserver', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-yank', 'coc-prettier']
+let g:coc_global_extensions = ['coc-tslint-plugin', 'coc-tsserver', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-yank', 'coc-prettier', 'coc-pairs', 'coc-snippets']
 
 " SHORTCUTS
+
+nnoremap <C-b> :NERDTreeToggle<CR>
+nnoremap <C-p> :Files<CR>
+nnoremap <C-g> :GFiles<CR>
+nnoremap <C-f> :Ag<CR>
 
 " Can be typed even faster than jj, and if you are already in
 "    normal mode, you (usually) don't accidentally move:
