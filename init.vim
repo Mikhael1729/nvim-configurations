@@ -50,6 +50,10 @@ Plug 'alvan/vim-closetag'
 
 Plug 'numkil/ag.nvim'
 
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+
+Plug 'tpope/vim-surround'
+
 " Initialize plugin system
 call plug#end()
 
@@ -65,11 +69,41 @@ set expandtab
 
 set number
 
+" Snippets
+
+" Use <C-l> for trigger snippet expand.
+imap <C-l> <Plug>(coc-snippets-expand)
+
+" Use <C-j> for select text for visual placeholder of snippet.
+vmap <C-j> <Plug>(coc-snippets-select)
+
+" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<c-j>'
+
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-k>'
+
+" Use <C-j> for both expand and jump (make expand higher priority.)
+imap <C-j> <Plug>(coc-snippets-expand-jump)
+
 " Prefer rg > ag > ack
 " https://hackercodex.com/guide/vim-search-find-in-project/
 if executable('ag')
   let g:ackprg = 'rg -S --no-heading --vimgrep'
 endif
+
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+let g:coc_snippet_next = '<tab>'
 
 " VARIABLES
 
@@ -79,6 +113,7 @@ let g:python3_host_prog = 'C:\Users\wguti\AppData\Local\Programs\Python\Python38
 " coc extensions
 let g:coc_global_extensions = ['coc-tslint-plugin', 'coc-tsserver', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-yank', 'coc-prettier', 'coc-pairs', 'coc-snippets']
 
+let g:ackprg = 'ag --nogroup --nocolor --column'
 " SHORTCUTS
 
 nnoremap <C-b> :NERDTreeToggle<CR>
