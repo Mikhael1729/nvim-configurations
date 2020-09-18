@@ -59,7 +59,7 @@ call plug#end()
 
 " SETTINGS
 colorscheme gruvbox
-" highlight Normal ctermbg=black
+autocmd vimenter * hi Normal guibg=NONE ctermbg=NONE
 set smarttab
 set cindent
 set tabstop=2
