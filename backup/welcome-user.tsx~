@@ -1,0 +1,49 @@
+import React, { FC } from "react";
+import { Card, CardContent, Typography, Button, CardActions, makeStyles } from "@material-ui/core";
+import InfoItem from "components/info-item";
+import {AccessTime} from "@material-ui/icons";
+
+const WelcomeUser: FC<IWelcomeUserProps> = (props) => {
+  const { userFullName, previousAcessDate, welcomeMessage } = props;
+  const classes = useStyles();
+
+  return (
+    <Card variant="outlined">
+      <CardContent>
+        <Typography variant="h5" component="h2">{welcomeMessage}</Typography>
+        <Typography className={classes.pos} color="textSecondary">{userFullName}</Typography>
+        <InfoItem
+          label="Acceso anterior"
+          icon={AccessTime}
+          iconSpacingLeft={0.5}
+          value="02 Jun 2020, 23:50:03"
+        />
+      </CardContent>
+    </Card>
+  )
+}
+
+const useStyles = makeStyles({
+  root: {
+    minWidth: 275,
+  },
+  bullet: {
+    display: 'inline-block',
+    margin: '0 2px',
+    transform: 'scale(0.8)',
+  },
+  title: {
+    fontSize: 14,
+  },
+  pos: {
+    marginBottom: 12,
+  },
+});
+
+export interface IWelcomeUserProps {
+  welcomeMessage: string;
+  userFullName: string;
+  previousAcessDate: Date;
+}
+
+export default WelcomeUser;

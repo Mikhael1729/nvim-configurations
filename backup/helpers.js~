@@ -1,0 +1,29 @@
+const { resolve } = require("path");
+const fs = require('fs')
+
+
+function getPageRoute(relativeRoute) {
+  const parts = relativeRoute.split('/');
+  const name = parts[parts.length - 1];
+  const pagesRoute = `./src/pages/${relativeRoute}`; // The relative path to go the routes.
+
+  if(name === "index")
+    return resolve(`${pagesRoute}.tsx`);
+
+  const path1 = resolve(`${pagesRoute}/index.ts`);
+  const path2 = resolve(`${pagesRoute}/${name}.tsx`);
+
+  var selectedPath = '';
+  try {
+    if(fs.existsSync(path1))
+      selectedPath = path1;
+    else
+      selectedPath = path2
+  } catch(err) {
+    console.log(err)
+  }
+
+  return selectedPath;
+}
+
+module.exports = { getPageRoute }

@@ -1,0 +1,73 @@
+import { useState, Dispatch, SetStateAction } from "react";
+import User from "models/user";
+import { createContainer } from "react-tracked";
+import AccountMovement from "models/account-movement";
+import Beneficiary from "models/beneficiary";
+import Account from "models/account";
+import Transaction from "models/transaction";
+import ChartData from "models/chart-data";
+import Loan from "models/loan";
+
+const accounts1 = Account.computeMockDataWithoutTransactions();
+const transactions = Transaction.generateMockData(accounts1);
+const loans = Loan.generateMockData(User.getMockdata());
+const accounts = Account.computeMockData(transactions, loans);
+const beneficiaries = Beneficiary.generateMockData();
+
+const initialState = {
+  user: User.getMockdata(),
+  userIsLoggedIn: false,
+  loans,
+  accountsData: {
+    accountBalances: [
+      {
+        account: accounts[0],
+        balances: [
+          { label: "24/10/1998", value: 4000 },
+          { label: "15/03/2005", value: 3000 },
+          { label: "15/03/2005", value: 2000 },
+          { label: "15/03/2005", value: 2780 },
+          { label: "15/03/2005", value: 1890 },
+          { label: "15/03/2005", value: 2390 },
+          { label: "15/03/2005", value: 3490 },
+        ] as ChartData[],
+      },
+      {
+        account: accounts[1],
+        balances: [
+          { label: "24/10/1998", value: 5000 },
+          { label: "15/03/2005", value: 3000 },
+          { label: "15/03/2005", value: 1000 },
+          { label: "15/03/2005", value: 2780 },
+          { label: "15/03/2005", value: 1890 },
+          { label: "15/03/2005", value: 2390 },
+          { label: "15/03/2005", value: 3490 },
+        ] as ChartData[],
+      },
+    ],
+  },
+  beneficiaries,
+  transactions,
+  productsPage: {
+    accounts,
+  },
+  accountMovementsPage: {
+    account: {} as Account,
+    movements: AccountMovement.mockData(),
+    filteredMovements: AccountMovement.mockData(),
+    selectedPeriod: { startDate: new Date(), endDate: new Date() },
+  },
+  loggedIn: true,
+}
+
+type DorabankState = typeof initialState;
+type SetDorabankState = Dispatch<SetStateAction<DorabankState>>
+
+const stateOfInitialState = () => useState(initialState);
+
+export const {
+  Provider: DorabankStateProvider,
+  useTracked: useDorabankState
+} = createContainer(stateOfInitialState);
+
+export { DorabankState, SetDorabankState }

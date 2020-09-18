@@ -1,0 +1,64 @@
+import React, { FC } from "react";
+import { Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/styles";
+import ProductTitle from "./product-title";
+import AccountDetails from "./account-details/account-details";
+import AccountMovements from "./account-movements";
+import { ProductAndStoreProps } from ".";
+import { RouteComponentProps } from "@reach/router";
+import SC from "models/screen-component";
+
+const useStyles = makeStyles((theme: Theme) => ({
+  pageTitle: {
+    marginBottom: theme.spacing(4),
+  },
+  titleBox: {
+    marginBottom: theme.spacing(1),
+  },
+  subtitle: {
+    marginBottom: theme.spacing(2),
+  },
+  title: {
+    fontWeight: "bold",
+  }
+}));
+
+export interface IProductProps extends RouteComponentProps {
+  accountNumber?: string;
+}
+
+const Product: SC<ProductAndStoreProps> = (props) => {
+  console.log('props: ', props);
+  const { account, movements, filterMovements, filteredMovements } = props;
+  const classes = useStyles();
+  const options = ["Tarjeta Determinada 1", "Tarjeta Determinada 2"]
+
+  return (
+    <>
+      <ProductTitle options={options} className={classes.pageTitle}>
+        {account.type}
+      </ProductTitle>
+
+      <AccountDetails
+        accountNumber={account.accountNumber}
+        status={account.status}
+        accountType={account.type}
+        actualBalance={account.currentBalance}
+        ammountInTransit={account.amountInTransit}
+        availableBalance={account.availableBalance}
+      />
+
+      <br />
+
+      <AccountMovements
+        movements={movements}
+        filterData={filterMovements}
+        filteredMovements={filteredMovements}
+      />
+    </>
+  )
+}
+
+Product.routeName = "/productos/:accountNumber";
+
+export default Product;

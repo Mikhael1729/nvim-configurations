@@ -1,0 +1,19 @@
+using System;
+
+namespace Core
+{
+  public class AccountMovement : BaseEntity
+  {
+    public DateTime MyProperty { get; set; }
+    public int ReferenceNumber { get; set; }
+    public string Description { get; set; }
+    public decimal Debit { get; set; }
+    public decimal Credit { get; set; }
+
+    public int AccountId { get; set; }
+    public Account Account { get; set; }
+
+    public AccountMovement()
+    {  }
+  }
+}

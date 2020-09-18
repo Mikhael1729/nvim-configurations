@@ -1,0 +1,3 @@
+const System = require('../node_modules/systemjs/dist/s.js');
+
+System.import('./app.js');

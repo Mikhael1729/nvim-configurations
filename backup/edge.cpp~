@@ -1,0 +1,15 @@
+#include "edge.hpp"
+#include "node.hpp"
+
+template <typename T>
+Graph::Edge<T>::Edge(
+  Node<T>* node1,
+  Node<T>* node2,
+  int weight,
+  int id)
+  : node1(node1), node2(node2), weight(weight), id(id) {
+
+}
+
+template <typename T>
+Graph::Edge<T>::~Edge() { }

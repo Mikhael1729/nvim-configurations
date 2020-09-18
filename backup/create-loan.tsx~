@@ -1,0 +1,67 @@
+import React from "react";
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import { Typography, Divider, Grid } from "@material-ui/core";
+import TextField from "@material-ui/core/TextField"
+import FormControlLabel from "@material-ui/core/FormControlLabel"
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import Loans from "pages/loans/loans";
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      width: '100%',
+    },
+  }),
+);
+
+function CreateLoan({ open, handleClose }: any) {
+
+  const classes = useStyles();
+  return (
+    <>
+      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+        <DialogTitle id="form-dialog-title">Solicitar Préstamo</DialogTitle>
+        <DialogContent>
+          <form>
+            <Grid container={true}>
+              <Grid item={true} xs={24} lg={12}>
+                <TextField variant='outlined' InputLabelProps={{
+                  shrink: true,
+                }} label="Cantidad" margin='normal' type='text' />
+                <br />
+                <TextField InputLabelProps={{
+                  shrink: true,
+                }} label="Razon de Préstamo" variant='outlined' margin='normal' type='text' />
+                <br />
+                <TextField InputLabelProps={{
+                  shrink: true,
+                }} label="Fecha de Inicio" variant='outlined' margin='normal' type='text' />
+                <br />
+                <TextField InputLabelProps={{
+                  shrink: true,
+                }} label="fecha de Vencimiento" variant='outlined' margin='normal' type='text' />
+              </Grid>
+            </Grid>
+          </form>
+        </DialogContent>
+        <DialogActions>
+          <Button variant='contained' onClick={handleClose} color="primary" autoFocus>
+            Cancelar
+          </Button>
+          <Button variant='contained' onClick={handleClose} color="primary" autoFocus>
+            Enviar Solicitud
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
+
+  )
+}
+
+export default CreateLoan;

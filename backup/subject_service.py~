@@ -1,0 +1,48 @@
+from .base_service import BaseService
+
+class SubjectService:
+  class __SubjectService(BaseService):
+    @property
+    def identifier(self):
+      return 's'
+
+    @property
+    def identifier_name(self):
+      return ''
+
+    def __init__(self):
+      super().__init__()
+
+    def generate_sub_elements(self, element):
+      return ['documents', 'exams', 'homeworks', 'lessons', 'previous', 'projects']
+
+    def save_sub_element(self, url, element):
+      return super().save_sub_element(url, element)
+
+    def generate_readme_content(self, subject):
+      return subject.to_markdown()
+
+  __instance = None
+
+  @staticmethod
+  def instance():
+    if not SubjectService.__instance:
+      SubjectService.__instance = SubjectService.__SubjectService()
+
+    print('Hey: ', SubjectService.__instance)
+    return SubjectService.__instance
+
+  def __init__(self):
+    pass
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,31 @@
+import React, { FC, useState } from "react";
+import Transaction from "models/transaction";
+import Table from "components/table";
+import AccountSelector from "../account-selector";
+import Account from "models/account";
+
+export interface ILastAccountMovements {
+  accounts: Account[];
+}
+
+const LastsAccountMovements: FC<ILastAccountMovements> = (props) => {
+  const { accounts } = props;
+  const [selected, setSelected] = useState(0);
+  const selectedAccount = accounts[selected];
+  
+  return (
+    <div>
+      <AccountSelector
+        selectedIndex={selected}
+        accounts={accounts}
+        onAccount={(account: Account, index: number) => setSelected(index)}
+      />
+      <Table
+        data={selectedAccount.accountTransactions}
+        headerCells={Transaction.computeHeadCells()}
+      />
+    </div>
+  )
+}
+
+export default LastsAccountMovements;

@@ -1,0 +1,31 @@
+import React, { createContext, useState, useContext, Dispatch, SetStateAction, FC } from "react";
+import User from "models/user";
+
+const initialState = {
+  user: User.getMockdata(),
+  loggedIn: true
+}
+
+type SharedStateType = [typeof initialState, Dispatch<SetStateAction<typeof initialState>>]
+
+const stateOfInitialState: () => SharedStateType = () => useState(initialState);
+
+const DorabankContext = createContext<ReturnType<typeof stateOfInitialState> | null>(null);
+
+function useDorabankState():  SharedStateType {
+  const value = useContext(DorabankContext);
+  if(value === null)
+    throw new Error("The DorabankContext.Provider is not yet implemented");
+
+  return value;
+}
+
+const DorabankStateProvider: FC = ({ children }) => {
+  return (
+    <DorabankContext.Provider value={stateOfInitialState()}>
+      {children}
+    </DorabankContext.Provider>
+  );
+}
+
+export { useDorabankState, DorabankStateProvider }

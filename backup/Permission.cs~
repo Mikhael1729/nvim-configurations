@@ -1,0 +1,18 @@
+using System;
+using System.Collections.Generic;
+
+namespace Core
+{
+  public class Permission : BaseEntity
+  {
+    public string Name { get; set; }
+    public string Description { get; set; }
+    public DateTime CreationDate { get; set; }
+    public bool Active { get; set; }
+
+    public List<RolePermission> RolePermissions;
+
+    public Permission()
+    {  }
+  }
+}

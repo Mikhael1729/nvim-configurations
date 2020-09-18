@@ -1,0 +1,29 @@
+class Beneficiary {
+  id: number;
+  name: string;
+  accountNumber: string;
+  bankName: string;
+
+  constructor(beneficiary: Partial<Beneficiary>) {
+    this.id = beneficiary.id || 0;
+    this.accountNumber = beneficiary.accountNumber || "";
+    this.bankName = beneficiary.bankName || "";
+    this.name = beneficiary.name || "";
+  }
+
+  static generateMockData(): Array<Beneficiary> {
+    const beneficiaries: Array<Beneficiary> = [];
+    for(let i = 0; i < 3; i++) {
+      beneficiaries.push(new Beneficiary({
+        id: i,
+        name: `Nombre Aquel ${i}`,
+        accountNumber: `${i}2048248583023`,
+        bankName: `Bank Determinado ${i}`
+      }));
+    }
+
+    return beneficiaries;
+  }
+}
+
+export default Beneficiary;

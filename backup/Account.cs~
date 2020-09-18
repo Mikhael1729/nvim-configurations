@@ -1,0 +1,33 @@
+using System.Collections.Generic;
+
+namespace Core
+{
+  public enum AccountType
+  {
+    CurrentAccount,
+    SavingsAccount
+  }
+
+  public enum AccountStatus
+  {
+    Active,
+    Inactive
+  }
+
+  public class Account : BaseEntity
+  {
+    public string AccountNumber { get; set; }
+    public AccountType Type { get; set; }
+    public AccountStatus Status { get; set; }
+    public decimal AvailableBalance { get; set; }
+    public decimal AmountInTransit { get; set; }
+    public decimal CurrentBalance { get; set; }
+
+    public int UserId { get; set; }
+    public User User { get; set; }
+    public List<AccountMovement> AccountMovements { get; set; }
+
+    public Account()
+    {  }
+  }
+}

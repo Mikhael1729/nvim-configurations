@@ -1,0 +1,63 @@
+import React, { FC, ReactElement } from "react";
+import Account, { AccountStatus } from "models/account";
+import { Card, CardContent, Typography, CardActions, Button, Box, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/styles";
+import { MonetizationOn, Favorite } from "@material-ui/icons";
+import InfoItem from "./info-item";
+import DefaultCurrencyFormat from "components/default-currency-format";
+
+const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    minWidth: 275,
+  },
+  bullet: {
+    display: 'inline-block',
+    margin: '0 2px',
+    transform: 'scale(0.8)',
+  },
+  title: {
+    fontSize: 14,
+  },
+  pos: {
+    marginBottom: 12,
+  },
+}));
+
+export interface IProductCardProps {
+  account: Account;
+  onDetails: (account: Account) => void;
+}
+
+
+const ProductCard: FC<IProductCardProps> = ({ account, onDetails }) => {
+  const classes = useStyles()
+  const { type, accountNumber, availableBalance, status } = account;
+
+  return (
+    <Card className={classes.root} variant="outlined">
+      <CardContent>
+        <Typography variant="h5" component="h2">
+          {type}
+        </Typography>
+        <Typography className={classes.pos} color="textSecondary">
+          {accountNumber}
+        </Typography>
+
+        <InfoItem
+          icon={MonetizationOn}
+          label="Balance Disponible"
+          value={<DefaultCurrencyFormat value={availableBalance} />}
+        />
+
+        <InfoItem label="Estado" icon={Favorite} value={status} />
+      </CardContent>
+      <CardActions>
+        <Button size="small" onClick={() => onDetails(account)}>
+          Ver detalles
+        </Button>
+      </CardActions>
+    </Card>
+  )
+}
+
+export default ProductCard;

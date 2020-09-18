@@ -1,0 +1,59 @@
+class Subject {
+  private _notYetTaken: boolean;
+  get notYetTaken(): boolean {
+    return this._notYetTaken;
+  }
+
+  private _category: string;
+  get category(): string {
+    return this._category;
+  }
+
+  code: string;
+  name: string;
+  takenDate: string;
+  score: string;
+  previousScore: string;
+  prerequisite: string;
+  corequisite: string;
+  realCode?: string;
+  credits: string;
+
+  constructor(subject: Partial<Subject>) {
+    this.code = subject.code;
+    this.name = subject.name;
+    this.credits = subject.credits;
+    this.takenDate = subject.takenDate;
+    this.score = subject.score;
+    this.previousScore = subject.previousScore;
+    this.prerequisite = subject.prerequisite;
+    this.corequisite = subject.corequisite;
+    this.realCode = subject.realCode;
+    this._notYetTaken = this.score.length === 0 ? true : false;
+
+    const hasNoClasification = this.code === this.realCode;
+    this._category = hasNoClasification ? "" : this.code;
+  }
+
+  static fromHtmlCollection(columns: HTMLCollectionOf<HTMLTableDataCellElement>): Subject {
+    const isValidHtmlTableSubject = columns.length === 12;
+    if(!isValidHtmlTableSubject)
+      throw new Error(`The given subject is not valid (does not contains all necessary fields)`);
+
+    const subject = new Subject({
+      code: columns[1].innerText,
+      name: columns[2].innerText,
+      takenDate: columns[3].innerText,
+      score: columns[4].innerText,
+      previousScore: columns[5].innerText,
+      credits: columns[6].innerText,
+      prerequisite: columns[7].innerText,
+      corequisite: columns[8].innerText,
+      realCode: columns[11].innerText,
+    });
+
+    return subject;
+  }
+}
+
+export default Subject;

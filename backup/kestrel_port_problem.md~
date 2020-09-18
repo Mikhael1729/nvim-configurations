@@ -1,0 +1,11 @@
+So here is the solution, if you are working on linux
+while running the dotnet run if you stop the server using ctr + z then it Ctrl+z sends the SIGTSTP (Signal Tty SToP) signal to the foreground job but don't actually stop the running kestrel server, so you have to mannualy end the process of the kestrel server.
+SOLLUTION Only use ctr + c to stop the kestrel server, actually its even displayed on the shell while you run dotnet run.
+
+To mannually kill the kestrel server use this command to see the running process and it pid on the port 5000
+
+sudo lsof -iTCP -sTCP:LISTEN -P | grep :5000
+
+then kill it with
+
+sudo kill -9 PID

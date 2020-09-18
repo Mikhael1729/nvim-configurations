@@ -1,0 +1,51 @@
+import React, { FC, ReactNode } from "react";
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, DialogProps } from "@material-ui/core";
+
+export interface IConfirmationDialogProps {
+  classes?: Record<'paper', string>;
+  title: string;
+  open?: boolean;
+  onClose?: () => void;
+  onOk?: () => void;
+  dialogProps?: DialogProps;
+  okButtonText?: string;
+  cancelButtonText?: string;
+  children?: ReactNode;
+}
+
+const ConfirmationDialog: FC<IConfirmationDialogProps> = (props) => {
+  const { onClose, onOk, open, dialogProps, children, okButtonText, cancelButtonText, title } = props;
+
+  return (
+    <Dialog
+      disableBackdropClick
+      disableEscapeKeyDown
+      fullWidth={true}
+      maxWidth="md"
+      aria-labelledby="confirmation-dialog-title"
+      {...dialogProps}
+      open={open!}
+    >
+      <DialogTitle id={title}>{title}</DialogTitle>
+      <DialogContent dividers>
+        {children}
+      </DialogContent>
+      <DialogActions>
+        <Button autoFocus onClick={onClose} color="primary">
+          {cancelButtonText}
+        </Button>
+        <Button onClick={onOk} color="primary">
+          {okButtonText}
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+}
+
+ConfirmationDialog.defaultProps = {
+  okButtonText: "Aceptar",
+  cancelButtonText: "Cancelar",
+  open: true
+}
+
+export default ConfirmationDialog;

@@ -1,0 +1,32 @@
+#ifndef GRAPH_NODE_HPP
+#define GRAPH_NODE_HPP
+
+#include <iostream>
+#include <string>
+
+#include "../linked_list/linked_list.hpp"
+#include "edge.hpp"
+
+namespace Graph {
+  template <typename T>
+  class Node {
+    public:
+      int id;
+      T data;
+      LinkedList::LinkedList<Edge<T>> adjacents;
+
+      Node(int, T data);
+      ~Node();
+      friend std::ostream& operator<<(std::ostream& strm, const Node& node) {
+        return strm << 
+          "Node(" <<
+            "id: " << std::to_string(node.id) << ", "
+            "data: " << node.data << 
+          ")";
+      }          
+          
+    };
+}
+
+#endif
+

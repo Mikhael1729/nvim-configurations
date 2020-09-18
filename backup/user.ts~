@@ -1,0 +1,61 @@
+export enum UserStatus {
+  active = "Activo",
+  inactive = "Inactivo",
+  blocked = "Bloqueado",
+}
+export enum Gender {
+  female = "Mujer",
+  male = "Hombre",
+}
+
+class User {
+  photoUrl?: string;
+  id?: number;
+  names?: string;
+  surnames?: string;
+  idCard?: string;
+  birthdate?: Date;
+  city?: string;
+  number?: string;
+  email?: string;
+  street?: string;
+  region?: string;
+  gender?: Gender;
+  status?: UserStatus;
+
+  constructor(user: Partial<User>) {
+    this.photoUrl = user.photoUrl
+    this.id = user.id
+    this.names = user.names
+    this.surnames = user.surnames
+    this.idCard = user.idCard
+    this.birthdate = user.birthdate
+    this.city = user.city
+    this.number = user.number
+    this.email = user.email
+    this.street = user.street
+    this.region = user.region
+    this.gender = user.gender;
+    this.status = user.status
+  }
+
+  static getMockdata(): User {
+    return new User({
+      photoUrl: "https://arc-anglerfish-arc2-prod-copesa.s3.amazonaws.com/public/WPNKFC3FPBBJ3NJK5PINB2XPUM.png",
+      id: 1,
+      names: "Nelson de Jesus",
+      surnames: "Santos Hidalgo",
+      idCard: "402-271-5025-3",
+      birthdate: new Date(1998, 9, 24),
+      number: "829-456-9871",
+      email: "thisisatestgmail.com",
+      city: "Santo Domingo",
+      street: "Cupey",
+      region: "Arroyo Hondo III",
+      gender: Gender.male,
+      status: UserStatus.active,
+    });
+  }
+}
+
+export default User;

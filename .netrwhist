@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =6
+let g:netrw_dirhist_6='/home/mikhael1729/Documents/code/bites/automaton'
+let g:netrw_dirhist_5='/home/mikhael1729/Documents/intec/T8/s3_programacion_III_(oop)/projects/dora-bank/projects/internet-banking'
+let g:netrw_dirhist_4='/home/mikhael1729/Documents/intec/T8/s3_programacion_III_(oop)/projects/dora-bank/projects/internet-banking/src/components/image'
+let g:netrw_dirhist_3='/home/mikhael1729/Documents/intec/T8/s3_programacion_III_(oop)/projects/dora-bank/projects/internet-banking/src/layouts/main-layout'
+let g:netrw_dirhist_2='/home/mikhael1729/Documents/intec/T8/s4_laboratorio_programacion_III_(oop)/lessons/l6_nservicebus_and_windows_forms/lab6-project/src'
+let g:netrw_dirhist_1='/home/mikhael1729/Documents/intec/T8/s6_laboratorio_tendencias_en_desarrollo_de_aplicaciones/homeworks/h5_use_testing_library/activity/range-testing/src/main/kotlin/range/testing'
+let g:netrw_dirhist_0='/home/mikhael1729/Documents/code/jintec-console-app'
+let g:netrw_dirhist_9='/home/mikhael1729/.config/gtk-3.0'
+let g:netrw_dirhist_8='/home/mikhael1729/.config'
+let g:netrw_dirhist_7='/home/mikhael1729/.config/gtk-3.0'

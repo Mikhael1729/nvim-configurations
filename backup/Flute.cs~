@@ -1,0 +1,12 @@
+namespace Mikhael
+{
+  public class Flute
+  {
+    public decimal Price { get; set; }
+
+    public Flute()
+    {  }
+
+    public bool IsExpensive(decimal price) => price > 60000m ? true : false;
+  }
+}

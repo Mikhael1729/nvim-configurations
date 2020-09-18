@@ -1,0 +1,36 @@
+#ifndef LINKED_LIST_LINKED_LIST_HPP
+#define LINKED_LIST_LINKED_LIST_HPP
+
+#include "node.hpp"
+
+template <typename T>
+namespace LinkedList {
+  class LinkedList
+  {
+    private:
+      int _lenght;
+      Node<T>* _head;
+      Node<T>* _last;
+
+    public:
+      LinkedList();
+      ~LinkedList();
+
+      const int lenght() const { return _lenght; }
+      Node<T>* head() const { return _head; }
+      Node<T>* last() const { return _last; }
+
+      void insertAfter(Node<T>*, T*);
+      void insertBefore(Node<T>*, T*);
+      void insertBeginning(T*);
+      void remove(Node<T>*);
+      Node<T>* find(bool callback(T*));
+      void insertEnd(T*);
+      void forEach(void callback(T*));
+
+    private:
+      bool isEmpty();
+  };
+}
+
+#endif

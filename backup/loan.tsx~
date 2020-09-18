@@ -1,0 +1,71 @@
+import User from "./user";
+import IHeadCell from "./ihead-cell";
+import DateHelper from "helpers/date-helper";
+import DefaultCurrencyFormat from "components/default-currency-format";
+import React from "react";
+import Loans from "pages/loans";
+
+class Loan {
+  id: number;
+  userId: number;
+  user: User;
+  ammount: number;
+  reason: string;
+  startDate: Date;
+  finishDate: Date;
+
+  constructor(loan: Partial<Loan>) {
+    this.id = loan.id || 0;
+    this.userId = loan.userId || 0;
+    this.user = loan.user || new User({})
+    this.ammount = loan.ammount || 0;
+    this.reason = loan.reason || "";
+    this.startDate = loan.startDate || new Date(Date.now());
+    this.finishDate = loan.finishDate || new Date(Date.now());
+
+  }
+
+  static generateMockData(user: User): Array<Loan> {
+    const loans: Array<Loan> = [];
+    for (let i = 1; i < 3; i++) {
+      loans.push(new Loan({
+        id: i,
+        userId: user.id,
+        ammount: 550000 * i,
+        reason: "Compra de Equipos de computo para manejo de servidores.",
+        startDate: new Date(Date.now()),
+        finishDate: new Date(Date.now()),
+      }))
+    }
+    return loans;
+  }
+  static computeHeadCells(): IHeadCell<Loan>[] {
+    const formatDate = DateHelper.convertToSpanishFullDate
+    const headerCells: IHeadCell<Loan>[] = [
+      {
+        label: "Fecha de Inicio",
+        propertyName: "startDate",
+        renderValue: (loans: Loan) =>
+          formatDate(loans.startDate),
+      },
+      { label: "Descripción", propertyName: "reason" },
+      {
+        label: "Monto de Préstamos",
+        propertyName: "ammount",
+        renderValue: loans => (
+          <DefaultCurrencyFormat value={loans.ammount} />
+        ),
+      },
+      {
+        label: "Fecha de Vencimiento",
+        propertyName: "finishDate",
+        renderValue: (loans: Loan) =>
+          formatDate(loans.finishDate),
+      },
+    ]
+
+    return headerCells
+  }
+
+}
+export default Loan;

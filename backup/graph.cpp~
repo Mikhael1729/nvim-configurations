@@ -1,0 +1,10 @@
+#include "graph.hpp"
+
+template <typename T>
+Graph::Graph<T>::Graph(bool directed = false): directed(directed)
+{ }
+
+template <typename T>
+Graph::Graph<T>::~Graph()
+{ }
+

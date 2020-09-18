@@ -1,0 +1,80 @@
+import React from "react";
+import Beneficiary from "./beneficiary";
+import Account from "./account";
+import IHeadCell from "./ihead-cell";
+import DateHelper from "helpers/date-helper";
+import DefaultCurrencyFormat from "components/default-currency-format";
+
+class Transaction {
+  dateTime: Date
+  description: string
+  ammount: number
+
+  accountId: number
+  account: Account
+  beneficiaryId: number
+  beneficiary: Beneficiary
+
+  constructor(transaction: Partial<Transaction>) {
+    this.dateTime = transaction.dateTime || new Date(Date.now())
+    this.description = transaction.description || ""
+    this.ammount = transaction.ammount || 0.0
+    this.beneficiaryId = transaction.beneficiaryId || 0.0
+    this.beneficiary = transaction.beneficiary || new Beneficiary({})
+    this.accountId = transaction.accountId || 0
+    this.account = transaction.account || new Account({})
+  }
+
+  static generateMockData(accounts: Account[]): Array<Transaction> {
+    const transactions: Array<Transaction> = []
+    const beneficiaries = Beneficiary.generateMockData()
+
+    for (let i = 0; i < beneficiaries.length && i < accounts.length; i++)
+      transactions.push(
+        new Transaction({
+          dateTime: new Date(Date.now()),
+          description: `Esta es una transacción de prueba ${i}`,
+          ammount: 4304 * (i + 0.5),
+          beneficiaryId: beneficiaries[i].id,
+          beneficiary: beneficiaries[i],
+          accountId: accounts[i].id,
+          account: accounts[i],
+        })
+      )
+
+    return transactions
+  }
+
+  static computeHeadCells(): IHeadCell<Transaction>[] {
+    const formatDate = DateHelper.convertToSpanishFullDate
+    const headerCells: IHeadCell<Transaction>[] = [
+      {
+        label: "Fecha",
+        renderValue: (transaction: Transaction) =>
+          formatDate(transaction.dateTime),
+      },
+      { label: "Descripción", propertyName: "description" },
+      {
+        label: "Producto",
+        renderValue: transaction =>
+          `${transaction.account.type.toString()} (${
+            transaction.account.accountNumber
+          })`,
+      },
+      {
+        label: "Monto",
+        renderValue: transaction => (
+          <DefaultCurrencyFormat value={transaction.ammount} />
+        ),
+      },
+      {
+        label: "Beneficiario",
+        renderValue: transaction => transaction.beneficiary.name,
+      },
+    ]
+
+    return headerCells
+  }
+}
+
+export default Transaction;

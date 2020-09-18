@@ -1,0 +1,7 @@
+#include "memory.hpp"
+
+Memory::Memory(string name, string description)
+  : name(name), description(description) {  }
+
+Memory::~Memory() {  }
+

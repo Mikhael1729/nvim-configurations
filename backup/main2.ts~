@@ -1,0 +1,95 @@
+interface Table {
+    Column: number;
+    Row: number;
+    arrayTable: number[];
+}
+
+const Tabla: Table = {
+    Column: 0,
+    Row: 0,
+    arrayTable: []
+};
+
+function createTable2(column: number, row: number): number[]{
+    let size: number;
+    Tabla.Column = column;
+    Tabla.Row = row;
+    size = (column * row);
+    return  Tabla.arrayTable = new Array(size);
+}
+
+function InsertTable(array: number[], rowSize: number, columnSize: number, row: number, column: number, val: number)
+{
+    let count: number = 0;
+
+    if(Tabla.Row === rowSize && Tabla.Column === columnSize)
+    {
+      // Found position.
+      let foundPosition: boolean = false;
+      for(let i = 0; i < rowSize; i++) {
+          for(let j = 0; j < columnSize; j++) {
+              foundPosition = row == i && column == j;
+              if(foundPosition) {
+                  console.log('i: ', i, 'j: ', j)
+                  break;
+              }
+
+              count++
+          }
+
+          if(foundPosition)
+            break;
+      }
+
+      console.log('(insert) count: ', count);
+      array[count] = val;
+    }
+}
+
+function ReadTable(array: number[], rowSize:number, columnSize: number, row: number, column: number): number
+{
+    let count: number = 0;
+
+    if(Tabla.Row === rowSize && Tabla.Column === columnSize)
+    {
+      // Found position.
+      let foundPosition: boolean = false;
+      for(let i = 0; i < rowSize; i++) {
+          for(let j = 0; j < columnSize; j++) {
+              foundPosition = row == i && column == j;
+              if(foundPosition) {
+                  console.log('i: ', i, 'j: ', j)
+                  break;
+              }
+
+              count++
+          }
+
+          if(foundPosition)
+            break;
+      }
+
+      return array[count];
+    }
+
+    return -1;
+}
+
+Tabla.arrayTable = createTable2(3, 3);
+
+InsertTable(Tabla.arrayTable, Tabla.Row, Tabla.Column, 2, 1, 8);
+InsertTable(Tabla.arrayTable, Tabla.Row, Tabla.Column, 0, 0, 11);
+InsertTable(Tabla.arrayTable, Tabla.Row, Tabla.Column, 1, 1, 555);
+
+const value = ReadTable(Tabla.arrayTable, Tabla.Row, Tabla.Column, 2, 1);
+const value2 = ReadTable(Tabla.arrayTable, Tabla.Row, Tabla.Column, 0, 0);
+const value3 = ReadTable(Tabla.arrayTable, Tabla.Row, Tabla.Column, 1, 1);
+
+
+console.log('value: ', value);
+console.log('value: ', value2);
+console.log('value: ', value3);
+
+for(let i = 0; i < Tabla.arrayTable.length; i++) {
+  console.log(Tabla.arrayTable[i])
+}

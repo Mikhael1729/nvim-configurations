@@ -1,0 +1,25 @@
+#include <math.h>
+#include <iostream>
+
+using namespace std;
+
+int main() {
+  int quantity;
+  cin >> quantity;
+
+	long long n;
+  long long total = 1;
+  for(int i = 1; i <= quantity; i++) {
+    cin >> n;
+    total *= n;
+
+    if(total == 0)
+      break;
+  }
+
+  bool exceedsLimit = (total > (long long)pow(10, 18));
+  if(!exceedsLimit)
+    cout << total;
+  else
+    cout << "-1";
+}

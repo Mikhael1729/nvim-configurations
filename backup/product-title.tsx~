@@ -1,0 +1,78 @@
+import React, { FC } from "react";
+import { Typography, Box, Button, Popover, Hidden, MenuItem, Divider, Theme } from "@material-ui/core";
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import CreditCardIcon from "@material-ui/icons/CreditCard";
+import { makeStyles } from "@material-ui/styles";
+import ArrowDropDownCircleIcon from '@material-ui/icons/ArrowDropDownCircle';
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+
+const useStyles = makeStyles((theme: Theme) => ({
+  button: {
+    display: "flex",
+    alignItems: "center",
+    alignContent: "center",
+    padding: 0,
+  },
+  title: {
+    marginRight: theme.spacing(2),
+  },
+  expandIcon: {},
+}));
+
+interface IProductTitleProps {
+  options: string[];
+  children: string;
+  className?: string;
+}
+
+const ProductTitle: FC<IProductTitleProps> = ({ options, children, className }) => {
+  // Classes.
+  const classes = useStyles();
+
+  // State.
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+  // Methods.
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
+  const handleClose = () => { setAnchorEl(null) }
+
+  return (
+    <div className={className}>
+      <Button
+        aria-label="more"
+        aria-controls="account-details"
+        aria-haspopup="true"
+        className={classes.button}
+        onClick={handleClick}
+      >
+        <Typography variant="h4" className={classes.title} align="left">
+          {children}
+        </Typography>
+        <KeyboardArrowDownIcon fontSize="large" />
+      </Button>
+      <Popover
+        id="account-details"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "right",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+      >
+        {options.map(option => (
+          <MenuItem key={option} selected={option === ""} onClick={handleClose}>
+            {option}
+          </MenuItem>
+        ))}
+      </Popover>
+    </div>
+  )
+}
+
+export default ProductTitle;

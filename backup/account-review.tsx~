@@ -1,0 +1,68 @@
+import React, { FC, ReactElement, ReactType } from "react";
+import { Typography, useMediaQuery } from "@material-ui/core";
+import { Theme, makeStyles, useTheme } from "@material-ui/core/styles";
+import { AccountType } from "models/account";
+import DefaultCurrencyFormat from "components/default-currency-format";
+import InfoItem from "components/info-item";
+
+const useStyles = makeStyles((theme: Theme) => ({
+  container: {
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "row",
+    [theme.breakpoints.down("xs")]: {
+      flexDirection: "column",
+      alignItems: "flex-start",
+      marginBottom: theme.spacing(1)
+    },
+  },
+  accountNumber: {
+    marginLeft: theme.spacing(1),
+    [theme.breakpoints.down("xs")]: {
+      marginLeft: 0,
+    }    
+  },
+}))
+
+interface IAccountReviewProps {
+  title: string;
+  subtitle: string;
+  value: string | number | ReactElement;
+  icon: ReactType<any>;
+  spacing?: number;
+
+}
+
+const AccountReview: FC<IAccountReviewProps> = ({ title, subtitle, value, spacing, icon }) => {
+  const classes = useStyles();
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down("xs"))
+
+  function accountNumberWithParenthesis() {
+    if(!matches)
+      return <>({subtitle})</>;
+    else
+      return subtitle;
+  }
+
+  return (
+    <div style={{ marginBottom: theme.spacing(spacing!) }}>
+      <div className={classes.container}>
+        <Typography variant="h6" component="h2">
+          {title}
+        </Typography>
+        <Typography className={classes.accountNumber} color="textSecondary">
+          {accountNumberWithParenthesis()}
+        </Typography>
+      </div>
+
+      <InfoItem value={value} icon={icon}/>
+    </div>
+  )
+}
+
+AccountReview.defaultProps = {
+  spacing: 2,
+}
+
+export default AccountReview;

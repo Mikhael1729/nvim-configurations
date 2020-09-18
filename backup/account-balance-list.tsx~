@@ -1,0 +1,29 @@
+import React, { FC, ReactNode } from "react";
+import { Box, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme: Theme) => ({
+  container: {
+    display: "flex",
+    flexDirection: "row",
+    [theme.breakpoints.down('xs')]: {
+      flexDirection: "column",
+    }
+  }
+}));
+
+interface IAccountBalanceListProps {
+  children?: ReactNode;
+}
+
+const AccountBalanceList: FC<IAccountBalanceListProps> = ({ children }) => {
+  const classes = useStyles();
+
+  return (
+    <Box className={classes.container}>
+      {children}
+    </Box>
+  )
+}
+
+export default AccountBalanceList;

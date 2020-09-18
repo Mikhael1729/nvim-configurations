@@ -1,0 +1,37 @@
+import React, { useContext, FC } from "react"
+import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
+import {MainLayoutContext} from "../main-layout";
+import { ContentStoreProps } from ".";
+import { navigate } from "gatsby";
+
+const useStyles = (drawerWidth: number) => makeStyles((theme: Theme) =>
+  createStyles({
+    // necessary for content to be below app bar
+    toolbar: theme.mixins.toolbar,
+    content: {
+      flexGrow: 1,
+      padding: theme.spacing(3),
+    },
+  })
+)
+
+interface ContentProps extends ContentStoreProps {
+  children?: React.ReactNode;
+}
+
+const Content: FC<ContentProps> = ({ children, userIsLoggedIn }) => {
+  const context = useContext(MainLayoutContext);
+  const classes = useStyles(context.drawerWidth)()
+
+  if(!userIsLoggedIn)
+    navigate("/login");
+
+  return (
+    <main className={classes.content}>
+      <div className={classes.toolbar} />
+      {children}
+    </main>
+  );
+}
+
+export default Content;

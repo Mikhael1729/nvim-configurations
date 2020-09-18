@@ -1,0 +1,24 @@
+import React, { FC } from "react";
+import { Router } from "@reach/router";
+import MainLayout from "layouts/main-layout";
+import Products from "screens/products";
+import Transactions from "screens/transactions";
+import Loans from "screens/loans";
+import UserProfile from "screens/user-profile";
+import UserHome from "screens/user-home";
+
+const App: FC = () => {
+  return (
+    <MainLayout>
+      <Router basepath="/app">
+        <UserHome path={UserHome.routeName} />
+        <Products path={Products.routeName} />
+        <Transactions path={Transactions.routeName} />
+        <Loans path={Loans.routeName} />
+        <UserProfile path={UserProfile.routeName} />
+      </Router>
+    </MainLayout>
+  )
+}
+
+export default App;

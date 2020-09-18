@@ -1,0 +1,65 @@
+import React, { FC, useState, useContext } from "react";
+import { Tooltip, IconButton, ThemeProvider, createMuiTheme, Typography, Divider, Box } from "@material-ui/core";
+import PrintIcon from "@material-ui/icons/Print"
+import ReportModal from "components/report-modal";
+import Table from "components/table";
+import {EnhancedTableContext} from "components/enhanced-table/enhanced-table";
+import ReportTemplate from "components/report-template";
+import { useDorabankState, DorabankState } from "../../../../store";
+import DateHelper from "helpers/date-helper";
+
+const theme = createMuiTheme({
+  palette: {
+    background: {
+      default: "#ffffff",
+      paper: "#ffffff",
+    },
+  },
+});
+
+
+interface IReportProps<T> {
+  data: T[];
+  startDate: string;
+  endDate: string;
+}
+
+function Report<T>({ data, startDate, endDate }: IReportProps<T>) {
+  const { headerCells } = useContext(EnhancedTableContext);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  return (
+    <>
+      <Tooltip title="Descargar" onClick={() => setModalIsOpen(true)}>
+        <IconButton aria-label="search-button">
+          <PrintIcon />
+        </IconButton>
+      </Tooltip>
+      <ThemeProvider theme={theme}>
+        <ReportModal
+          open={modalIsOpen}
+          handleClose={() => setModalIsOpen(false)}
+          title="Guardar reporte"
+          actionButtonText="Exportar a PDF"
+        >
+          <React.Fragment>
+            <ReportTemplate>
+              <Typography variant="h6">
+                Movimientos de cuenta desde <i>{startDate}</i> hasta <i>{endDate}</i>
+              </Typography>
+              <Divider />
+              <Box m={2} />
+              <Table
+                data={data}
+                headerCells={headerCells}
+                withPaper={false}
+              />
+            </ReportTemplate>
+          </React.Fragment>
+        </ReportModal>
+      </ThemeProvider>
+    </>
+  )
+}
+
+export default Report

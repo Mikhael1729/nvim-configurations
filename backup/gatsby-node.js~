@@ -1,0 +1,105 @@
+/**
+ * Implement Gatsby's Node APIs in this file.
+ *
+ * See: https://www.gatsbyjs.org/docs/node-apis/
+ */
+
+// You can delete this file if you're not using it
+const { getPageRoute } = require("./helpers")
+const { resolve } = require('path')
+
+// Modify the creation of pages in the app.
+exports.createPages = ({ actions }) => {
+  const { createPage } = actions
+
+  createPage({
+    path: `/`,
+    component: getPageRoute(`index`),
+    context: { breadcrumbName: "Inicio" },
+  })
+  createPage({
+    path: `/transacciones/realizar-transferencia`,
+    component: getPageRoute(`transfer`),
+    context: { breadcrumbName: "Pagos y Transferencias" },
+  })
+
+  createPage({
+    path: `/transacciones/realizar-transferencia/another`,
+    component: getPageRoute(`transfer`),
+    context: { breadcrumbName: "Otros" },
+  })
+
+  createPage({
+    path: `/transacciones`,
+    component: getPageRoute(`transactions`),
+    context: { breadcrumbName: "Transacciones" },
+  })
+
+  createPage({
+    path: `/productos`,
+    component: getPageRoute(`products`),
+    context: { breadcrumbName: "Productos" },
+  })
+
+  createPage({
+    path: `/productos/product`,
+    matchPath: '/productos/:accountNumber',
+    component: getPageRoute(`product`),
+    context: { breadcrumbName: "Product" },
+  })
+
+  createPage({
+    path: `/prestamos`,
+    component: getPageRoute(`loans`),
+    context: { breadcrumbName: "Préstamos" },
+  })
+  createPage({
+    path: `/nosotros`,
+    component: getPageRoute(`about`),
+    context: { breadcrumbName: "Nosotros" },
+  })
+  createPage({
+    path: `/perfil`,
+    component: getPageRoute(`user-profile`),
+    context: { breadcrumbName: "Perfil de cliente" },
+  })
+}
+
+// Implement the Gatsby API “onCreatePage”. This is
+// called after every page is created.
+exports.onCreatePage = async ({ page, actions }) => {
+  const { createPage } = actions
+  // Only update the `/app` page.
+  if (page.path.match(/^\/app/)) {
+    // page.matchPath is a special key that's used for matching pages
+    // with corresponding routes only on the client.
+    console.log('match path in app O.o: ', page.path);
+    page.matchPath = "/app/*"
+  }
+
+  if (page.path.match("/404/"))
+    page.context.layout = "404"
+
+  if (page.path.match("/login/"))
+    page.context.layout = "login"
+
+  // Update page.
+  createPage(page)
+}
+
+exports.onCreateWebpackConfig = ({ actions }) => {
+  actions.setWebpackConfig({
+    resolve: {
+      alias: {
+        hoc: resolve(__dirname, 'src/hoc'),
+        screens: resolve(__dirname, 'src/screens'),
+        components: resolve(__dirname, 'src/components'),
+        helpers: resolve(__dirname, 'src/helpers'),
+        images: resolve(__dirname, 'src/images'),
+        layouts: resolve(__dirname, 'src/layouts'),
+        models: resolve(__dirname, 'src/models'),
+        pages: resolve(__dirname, 'src/pages'),
+      },
+    },
+  })
+}

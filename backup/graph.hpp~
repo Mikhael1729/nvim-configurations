@@ -1,0 +1,25 @@
+#ifndef GRAPH_GRAPH_HPP
+#define GRAPH_GRAPH_HPP
+
+#include <iostream>
+#include <map>
+#include "node.cpp"
+#include "edge.cpp"
+#include "../linked_list/linked_list.cpp"
+
+namespace Graph {
+  template <typename T>
+  class Graph {
+    public:
+      std::map<int, Node<T>> nodes;
+      LinkedList::LinkedList<Edge<T>> edges;
+      
+      bool directed;
+
+      Graph(bool directed = false);
+      ~Graph();
+  };
+}
+
+#endif
+

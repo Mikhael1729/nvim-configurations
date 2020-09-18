@@ -1,0 +1,22 @@
+using Xunit;
+using Mikhael;
+
+namespace Mikhael.Tests
+{
+  public class Mikhael_TestInstrument
+  {
+    readonly Flute _flute;
+
+    public Mikhael_TestInstrument() => _flute = new Flute();
+
+    [Theory]
+    [InlineData(300, 70000)]
+    [InlineData(4000, 1000)]
+    [InlineData(500000, 0)]
+    public void IsExpensive_InptIs300_ReturnFalse(decimal price, int h)
+    {
+      var result = _flute.IsExpensive(price + h);
+      Assert.False(result, $"DOP {price} + {h} should not be expensive");
+    }
+  }
+}

@@ -1,0 +1,10 @@
+# L6 - Kata 2 - Anagramas
+
+Ve a [Kata 06: Anagrams](http://codekata.com/kata/kata06-anagrams/) y resuelve ese problema.
+
+## Consideraciones
+
+- Descarga el asunto en UTF-8.
+- El análisis que se haga debe ser case insensitive.
+- Las mismas cantidad de letras y orden, pero no importa el qué (si es mayúsculas o minúsculas).
+- Cualquier caracter además de un apóstrofe, será conside

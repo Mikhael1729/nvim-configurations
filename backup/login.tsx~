@@ -1,0 +1,132 @@
+import React, { useState } from "react"
+import Button from "@material-ui/core/Button"
+import logo from "images/icon.png"
+import CssBaseline from "@material-ui/core/CssBaseline"
+import TextField from "@material-ui/core/TextField"
+import FormControlLabel from "@material-ui/core/FormControlLabel"
+import Checkbox from "@material-ui/core/Checkbox"
+import { Link, navigate } from "gatsby"
+import Grid from "@material-ui/core/Grid"
+import Typography from "@material-ui/core/Typography"
+import { makeStyles } from "@material-ui/core/styles"
+import Container from "@material-ui/core/Container"
+import Card from "@material-ui/core/Card"
+import { client } from "helpers/axios";
+import axios from "axios";
+
+const useStyles = makeStyles(theme => ({
+  paper: {
+    flexGrow: 1,
+    marginBottom: "30px",
+    paddingTop: "30px",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  logo: {
+    maxWidth: "70px",
+  },
+  form: {
+    width: "100%", // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+  fpass: {
+    paddingBottom: "30px",
+  },
+  card: {
+    marginTop: theme.spacing(4),
+  },
+}))
+
+//"id": 1,
+//"username": "dai",
+//"password": "123",
+//"email": "dai@gmail.com",
+//"userRoleId": 2,
+//"status": 0,
+//"gender": 1,
+//"userRole": null
+
+export default function LoginPage({ updateUser } : any) {
+  const classes = useStyles()
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [credentials, setCredentials] = useState({ user: "", password: "" })
+
+  const validateUser = async () => {
+    const response = await axios.get(`https://dorabankintegrationlayer.azurewebsites.net/api/IntegrationLayer/Users/Login/${username}/${password}?password=${password}`);
+
+    if (response.status === 200) {
+      updateUser(response.data);
+      navigate("/")
+    }
+    else {
+      alert("Datos Erroneos!")
+    }
+
+    setCredentials({
+      user: "",
+      password: "",
+    })
+
+  }
+
+  return (
+    <>
+      <Card variant="outlined" className={classes.card}>
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <div className={classes.paper}>
+            <img src={logo} className={classes.logo} alt="Logo" />
+            <Typography component="h1" variant="h4">
+              Dora Bank
+            </Typography>
+            <div className={classes.form}>
+              <TextField
+                variant="outlined"
+                value={username}
+                onChange={(event) => setUsername(event.target.value)}
+                margin="normal"
+                fullWidth
+                label="Cedula"
+                name="user"
+              />
+
+              <TextField
+                variant="outlined"
+                value={password}
+                onChange={event => setPassword(event.target.value)}
+                margin="normal"
+                fullWidth
+                label="Pin de Seguridad"
+                type="password"
+                name="password"
+              />
+
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="Recordarme"
+              />
+
+              {/* <Link to="/" color="inherit" style={{ textDecoration: "none" }}> */}
+
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+                onClick={validateUser}
+              >
+                Iniciar Sesion
+              </Button>
+            </div>
+          </div>
+        </Container>
+      </Card>
+    </>
+  )
+}

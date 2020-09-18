@@ -1,0 +1,25 @@
+#include <iostream>
+#include <math.h>
+
+using namespace std;
+
+int main() {
+  long long n;
+
+  cin >> n;
+
+  int quantity = 1;
+  long long z = pow(2, 1);
+  long long current = n / z;
+
+  for(int i = 2; current != 1 && n >= 2; i++) {
+    z = pow(2, i);
+    current = current / z;
+    quantity++;
+    cout << "z: " << z << endl;
+    cout << "current: " << current << endl;
+    cout << "quantity: " << quantity << endl;
+  }
+
+  cout << quantity << endl;
+}

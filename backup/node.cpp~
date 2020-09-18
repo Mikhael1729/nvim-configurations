@@ -1,0 +1,11 @@
+#include "node.hpp"
+
+template <typename T>
+Graph::Node<T>::Node(int id, T data)
+  : id(id), data(data) {
+  adjacents = LinkedList::LinkedList<Edge>(); 
+}
+
+
+template <typename T>
+Graph::Node<T>::~Node() { }

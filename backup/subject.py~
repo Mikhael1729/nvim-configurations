@@ -1,0 +1,174 @@
+from models.classroom_schedule import ClassroomSchedule
+from models.element import Element
+import os
+
+class Subject(Element):
+  # Subject identifier
+  identifier = 's'
+  identifier_name = 'subject'
+
+  @property
+  def subject_code(self):
+    return self.__subject_code
+
+  @subject_code.setter
+  def subject_code(self, value):
+    self.__subject_code = value
+
+  @property
+  def section(self):
+    return self.__section
+
+  @section.setter
+  def section(self, value):
+    self.__section = value
+
+  @property
+  def professor(self):
+    return self.__professor
+
+  @professor.setter
+  def professor(self, value):
+    self.__professor = value
+
+  @property
+  def capitalized_professor(self):
+    return self.__professor.title()
+
+  @property
+  def schedule(self):
+    return self.__schedule
+
+  @schedule.setter
+  def schedule(self, value):
+    self.__schedule = value
+
+  def __init__(self, code_number, subject_code, name, section, professor, schedule):
+    super(Subject, self).__init__(
+      Subject.identifier + str(code_number),
+      Element.generate_default_name(name, Subject.identifier_name)
+    )
+    self.__subject_code = subject_code
+    self.__section = section
+    self.__professor = professor
+    self.__schedule = schedule
+
+  def __str__(self):
+    return f"<c: {self.code}, n: {self.name}, s: {self.section}, sc: {self.schedule}>"
+
+  @classmethod
+  def from_schedule_row(cls, line, code_number = 0):
+    # Split the parts of the subject data.
+    parts = line.split("\t")
+
+    try:
+      # Indicates the schedule.
+      classrooms = parts[3].split(", ")
+
+      # Days of class and its schedule
+      days = {}
+      for i in range(4, len(parts) - 2):
+        if(len(parts[i]) > 0):
+          days[i - 4] = parts[i]
+
+      classroom_schedules = {}
+      days_keys = list(days.keys())
+
+      # Classroom schedule
+      i = 0
+      length1 = len(classrooms)
+      length2 = len(days_keys)
+
+      while i < length1 or i < length2:
+        classroom_schedules[days_keys[i] if i < length2 else 6] = ClassroomSchedule(
+          classroom = classrooms[i if i < length1 else length1 - 1],
+          schedule = days[days_keys[i]] if i < length2 else None
+        )
+
+        i = i + 1
+
+      # Create the subject
+      subject = cls(
+        code_number = code_number,
+        subject_code = parts[0],
+        name = parts[1],
+        section = parts[2],
+        professor = parts[11],
+        schedule = classroom_schedules
+      )
+      return subject
+    except OSError as e:
+      print(f"There was a problem creating the subject list: {e}")
+      return None
+
+  def compute_hours_per_week(self):
+    schedules = self.schedule
+    total = 0
+
+    for schedule in schedules:
+      hours = schedules[schedule].schedule
+
+      if(hours != None and schedules[schedule].classroom[2:] != 'VT'):
+        parts = hours.split('/')
+        start = int(parts[0])
+        end = int(parts[1])
+        total += end - start
+
+    return total
+
+  # TODO: Include schedule. :3
+  def to_markdown(self):
+    travel_days = []
+    content = (
+      f"# {self.code.title()} - {self.capitalized_name}\n\n"
+      f"- Code: {self.subject_code}\n"
+      f"- Professor: {self.capitalized_professor}\n"
+      "- Phone: ?\n"
+      "- Email: ?\n\n"
+      "## Schedule\n\n"
+      f"{self.to_markdown_table_row(travel_days, with_table_header=True, only_schedule=True)}\n\n"
+      "## Evaluation System\n\n"
+      "|Title|Score|Date|\n"
+      "|--|--|--|\n"
+    )
+
+    return content
+
+  @staticmethod
+  def schedule_table_header():
+    return (
+      f"|Mon|Tue|Wed|Thu|Fri|Sat|Virtual|\n"
+      f"|--|--|--|--|--|--|--|"
+    )
+
+  @staticmethod
+  def subject_markdown_table_header():
+    return (
+      f"|Name|Code|Professor|Section|Mon|Tue|Wed|Thu|Fri|Sat|Virtual|\n"
+      f"|--|--|--|--|--|--|--|--|--|--|--|"
+    )
+
+  def to_markdown_table_row(self, travel_days, with_table_header = False, only_schedule = False):
+    schedule_row = ''
+
+    if only_schedule and with_table_header:
+      schedule_row += Subject.schedule_table_header() + "\n"
+    elif not only_schedule and with_table_header:
+      schedule_row += f"|{self.capitalized_name}|{self.subject_code}|{self.capitalized_professor}|{self.section}|"
+      schedule_row += Subject.subject_markdown_table_header() + "\n"
+
+    # Add subject schedule
+    schedules = self.schedule
+    for i in range(0, 7):
+      if i in schedules:
+        schedule_row += f"{schedules[i].classroom}<br />{schedules[i].schedule}|"
+
+        # Compute travel days
+        if (i not in travel_days) and (schedules[i].classroom[:2] != 'VT'):
+          travel_days.append(i)
+      else:
+        schedule_row += "|"
+    schedule_row += "\n"
+
+    return schedule_row
+

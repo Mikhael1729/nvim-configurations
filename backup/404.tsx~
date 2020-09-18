@@ -1,0 +1,13 @@
+import React, {FC} from "react";
+import {Typography} from "@material-ui/core";
+
+const Page404: FC<any> = () => {
+  return (
+      <Typography variant="h1" color="textPrimary">
+        ERROR 404
+      </Typography>
+      <Typography variant="h1">Página no encontrada</Typography>
+  )
+}
+
+export default Page404;

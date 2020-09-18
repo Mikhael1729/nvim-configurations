@@ -1,0 +1,62 @@
+import User from "./user";
+import AccountMovement from "./account-movement";
+import Transaction from "./transaction";
+
+export enum AccountType {
+  CurrentAccount = "Cuenta Corriente",
+  SavingsAccount = "Cuenta de Ahorros"
+}
+
+export enum AccountStatus {
+  Active = "Activa",
+  Inactive = "Inactiva"
+}
+
+class Account {
+  id: number;
+  accountNumber: string;
+  type: AccountType;
+  status: AccountStatus;
+  availableBalance: number;
+  amountInTransit: number;
+  currentBalance: number;
+  userId: number;
+  user: User;
+  accountMovements: Array<AccountMovement>;
+  accountTransactions: Array<Transaction>;
+
+  constructor(account: Partial<Account>) {
+    this.id = account.id || 0;
+    this.accountNumber = account.accountNumber || '';
+    this.type = account.type || AccountType.CurrentAccount;
+    this.status = account.status || AccountStatus.Inactive;
+    this.availableBalance = account.availableBalance || 0.00;
+    this.amountInTransit = account.amountInTransit || 0.00;
+    this.currentBalance = account.currentBalance || 0.00;
+    this.userId = account.userId || 0;
+    this.user = account.user || new User({ });
+    this.accountMovements = account.accountMovements || [] as AccountMovement[];
+    this.accountTransactions = account.accountTransactions || [] as Transaction[];
+  }
+
+  static computeMockData(transactions: Transaction[]): Array<Account> {
+    const accounts: Array<Account> = [];
+    for(let i = 1; i < 3; i++) {
+      const balance = 20000.35 * (i + 0.5);
+      accounts.push(new Account({
+        id: i,
+        accountNumber: `${i}20494292930`,
+        type: AccountType.SavingsAccount,
+        status: AccountStatus.Active,
+        availableBalance: balance,
+        amountInTransit: 0.00,
+        currentBalance: balance,
+        accountTransactions: transactions
+      }));
+    }
+
+    return accounts;
+  }
+}
+
+export default Account;

@@ -1,0 +1,70 @@
+import re
+import os
+import textwrap
+
+from .base_service import BaseService
+from .subject_service import SubjectService
+from helpers.string_helper import StringHelper
+from models.trimester import Trimester
+from models.subject import Subject
+
+class TrimesterService():
+  class __TrimesterService(BaseService):
+    @property
+    def identifier(self):
+      return Trimester.identifier
+
+    @property
+    def identifier_name(self):
+      return ''
+
+    def __init__(self):
+      super().__init__()
+
+    def add_from_schedule(self, schedule_url):
+      # Extract subjects
+      subjects = []
+      with open(schedule_url, 'r') as file:
+        lines = file.readlines()
+
+        for line in lines:
+          subject = Subject.from_schedule_row(line)
+          subjects.append(subject)
+
+      # Store the new trimester.
+      new_trimester = Trimester.from_subjects(subjects)
+      self.add('', new_trimester)
+
+    def generate_sub_elements(self, trimester):
+      return trimester.subjects
+
+    def save_sub_element(self, url, subject):
+      SubjectService.instance().add(url, subject)
+
+    # TODO: Evaluate which is better option: the Element class or BaseService class to do the templates.
+    def generate_readme_content(self, trimester):
+      content = (
+        f"# Trimester {trimester.code_number}\n\n"
+        f"## Meta\n\n"
+        f"- Classroom Hours: {trimester.classroom_hours}\n"
+        f"- Subjects quantity: {trimester.subjects_quantity}\n"
+        f"- Transportation hours: {trimester.transportation_hours}\n"
+        f"- Free days: {trimester.free_days}\n\n"
+        f"## Schedule\n\n"
+        f"{Subject.schedule_table_header()}\n"
+        f"{trimester.schedule_table_content}"
+      )
+
+      return content
+
+  __instance = None
+
+  @staticmethod
+  def instance():
+    if not TrimesterService.__instance:
+      TrimesterService.__instance = TrimesterService.__TrimesterService()
+
+    return TrimesterService.__instance
+
+  def __init__(self):
+    pass

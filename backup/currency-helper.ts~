@@ -1,0 +1,11 @@
+class CurrencyHelper {
+  static toCurrencyFormat(ammount: number) {
+    const formatter = new Intl.NumberFormat("es-DR", {
+      style: "currency",
+      currency: "USD",
+    });
+
+    const value = formatter.format(ammount);
+    return value;
+  }
+}

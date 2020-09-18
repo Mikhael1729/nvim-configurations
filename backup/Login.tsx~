@@ -1,0 +1,142 @@
+import React from "react"
+import TextField from "@material-ui/core/TextField"
+import CssBaseline from "@material-ui/core/CssBaseline"
+import Typography from "@material-ui/core/Typography"
+import Container from "@material-ui/core/Container"
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
+import AppBar from "@material-ui/core/AppBar"
+import Toolbar from "@material-ui/core/Toolbar"
+import Button from "@material-ui/core/Button"
+import IconButton from "@material-ui/core/IconButton"
+import MenuIcon from "@material-ui/icons/Menu"
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles"
+import "typeface-roboto"
+
+import { lightGreen, lightBlue } from "@material-ui/core/colors"
+
+const appTheme = createMuiTheme({
+  palette: {
+    primary: {
+      main: lightBlue[200],
+    },
+    secondary: {
+      main: lightBlue[800],
+    },
+  },
+})
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      flexGrow: 1,
+      marginBottom: "30px",
+    },
+    menuButton: {
+      marginRight: theme.spacing(2),
+    },
+
+    title: {
+      flexGrow: 1,
+      margin: "auto",
+      textAlign: "center",
+      padding: 10,
+      alignItems: "center",
+      alignContent: "center",
+    },
+
+    user: {
+      alignItems: "10px",
+      textAlign: "center",
+      margin: "auto",
+      padding: "10px",
+      width: "50%",
+      marginTop: "-15px",
+    },
+    label1: {
+      alignItems: "10px",
+      textAlign: "center",
+      margin: "auto",
+      padding: "10px",
+      width: "50%",
+      marginTop: "100px",
+    },
+    label2: {
+      alignItems: "10px",
+      textAlign: "center",
+      margin: "auto",
+      padding: "10px",
+      width: "50%",
+      marginTop: "20px",
+    },
+    pass: {
+      alignItems: "10px",
+      textAlign: "center",
+      margin: "auto",
+      padding: "10px",
+      width: "50%",
+      marginTop: "-15px",
+    },
+
+    logB: {
+      textAlign: "center",
+      marginTop: "20px",
+    },
+
+    userButtons: {
+      marginLeft: "1270px",
+    },
+  })
+)
+
+const LoginPage = () => {
+  const classes = useStyles()
+
+  return (
+    <MuiThemeProvider theme={appTheme}>
+      {/*LoginPage*/}
+      <div className={classes.root}>
+        <AppBar position="fixed" color="transparent">
+          <Toolbar>
+            <Typography variant="h5" className={classes.title}>
+              Iniciar Sesion
+            </Typography>
+            <Button color="inherit" variant="contained" href="/">
+              Volver
+            </Button>
+          </Toolbar>
+        </AppBar>
+      </div>
+      {/* Container */}
+      <CssBaseline />
+      <Container maxWidth="sm">
+        {/*<Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '85vh' }} />*/}
+        <form>
+          <div className={classes.label1}>
+            <Typography variant="h6">Usuario</Typography>
+          </div>
+          <div className={classes.user}>
+            <TextField id="filled-basic" label="Usuario" variant="filled" />
+          </div>
+          <div className={classes.label2}>
+            <Typography variant="h6">Contraseña</Typography>
+          </div>
+          <div className={classes.pass}>
+            <TextField
+              id="filled-basic"
+              label="Contraseña"
+              variant="filled"
+              type="password"
+            />
+          </div>
+          <div className={classes.logB}>
+            <Button variant="contained" color="secondary">
+              Iniciar Sesion
+            </Button>
+          </div>
+        </form>
+      </Container>
+    </MuiThemeProvider>
+  )
+}
+
+export default LoginPage

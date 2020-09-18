@@ -1,0 +1,35 @@
+import Beneficiary from "./beneficiary";
+
+class Transaction {
+  dateTime: Date;
+  description: string;
+  ammount: number;
+  beneficiaryId: number;
+  beneficiary: Beneficiary
+
+  constructor(transaction: Partial<Transaction>) {
+    this.dateTime = transaction.dateTime || new Date(Date.now());
+    this.description = transaction.description || "";
+    this.ammount = transaction.ammount || 0.00;
+    this.beneficiaryId = transaction.beneficiaryId || 0.00;
+    this.beneficiary = transaction.beneficiary || new Beneficiary({ });
+  }
+
+  static generateMockData(): Array<Transaction> {
+    const transactions: Array<Transaction> = [];
+    const beneficiaries = Beneficiary.generateMockData();
+
+    for(let i = 0; i < beneficiaries.length; i++)
+      transactions.push(new Transaction({
+        dateTime: new Date(Date.now()),
+        description: `Esta es una transacción de prueba ${i}`,
+        ammount: 4304 * (i + 0.5),
+        beneficiaryId: beneficiaries[i].id,
+        beneficiary: beneficiaries[i],
+      }))
+
+    return transactions;
+  }
+}
+
+export default Transaction;

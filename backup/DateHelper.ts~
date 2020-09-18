@@ -1,0 +1,63 @@
+interface IDatePartsInString {
+  year: string;
+  monthNumber: string;
+  dayNumber: string;
+  hour: string;
+  minutes: string;
+  seconds: string;
+}
+
+class DateHelper {
+  static spanishMonths = [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" ];
+  static abreviatedMonths = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
+
+  static convertToSpanishFullDate(date: Date): string {
+    const { hour, minutes, seconds } = DateHelper.extractDatePartsInString(date);
+    const stringDate = DateHelper.dateToStringFormat(date);
+    const stringTime = `${hour}:${minutes}:${seconds}`;
+    
+    const fullDate = `${stringDate} - ${stringTime}`;
+    return fullDate;
+  }
+
+  static dateToStringFormat(date: Date): string {
+    const { year, monthNumber, dayNumber } = DateHelper.extractDatePartsInString(date);
+    const stringDate = `${dayNumber}/${monthNumber}/${year}`
+
+    return stringDate;
+  }
+
+  static dateToStringNamedFormat(date: Date): string {
+    const { year, monthNumber, dayNumber, hour, minutes, seconds } = DateHelper.extractDatePartsInString(date);
+
+    const monthIndex = parseInt(monthNumber, 10) - 1;
+    const abreviatedMonthName = DateHelper.abreviatedMonths[monthIndex];
+    
+    const datePart = `${dayNumber} ${abreviatedMonthName} ${year}`;
+    const timePart = `${hour}:${minutes}:${seconds}`;
+
+    const dateTime = datePart + ", " + timePart;
+    return dateTime;
+  }
+
+  static extractDatePartsInString(date: Date): IDatePartsInString {
+    const year = date.getFullYear().toString();
+    const monthNumber = DateHelper.normalize(date.getMonth() + 1);
+    const dayNumber = DateHelper.normalize(date.getDate());
+    const hour = DateHelper.normalize(date.getHours());
+    const minutes = DateHelper.normalize(date.getMinutes());
+    const seconds = DateHelper.normalize(date.getSeconds());
+
+    return { year, monthNumber, dayNumber, hour, minutes, seconds }
+  }
+
+  static normalize(element: number): string {
+    if(element < 10)
+      return '0' + element.toString();
+
+    return element.toString();
+  }
+
+}
+
+export default DateHelper;

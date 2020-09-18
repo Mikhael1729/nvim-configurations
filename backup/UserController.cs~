@@ -1,0 +1,26 @@
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using CoreApi.Services;
+using CoreApi.Models;
+
+namespace CoreApi.Controllers
+{
+  [ApiController]
+  [Route("[controller]")]
+  public class UsersController : ControllerBase
+  {
+    readonly IUserService _userService;
+
+    public UsersController(IUserService userService) => _userService = userService;
+
+    /// <summary>
+    ///   Get the hold list of users.
+    /// </summary>
+    [HttpGet]
+    public IEnumerable<User> Get()
+    {
+      var users = _userService.GetAll();
+      return users;
+    }
+  }
+}

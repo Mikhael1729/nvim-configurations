@@ -1,0 +1,173 @@
+import React, { ReactElement, useContext, useState, createContext, ReactNode } from "react";
+import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
+import Order from "models/order";
+import { TableContainer, Table, TableBody, TableCell, TableRow, TablePagination, Paper as div } from "@material-ui/core";
+import EnhancedTableHeader from "components/enhanced-table/enhanced-table-head";
+import IHeadCell from "models/ihead-cell";
+import EnhancedToolbar from "./enhanced-toolbar";
+
+const useStyles = makeStyles(
+  createStyles({
+    root: {
+      display: "table",
+      width: "100%",
+      tableLayout: "fixed",
+    },
+    paper: {
+      display: "table-cell",
+    },
+    table: {
+      minWidth: 750,
+    },
+    visuallyHidden: {
+      border: 0,
+      clip: 'rect(0 0 0 0)',
+      height: 1,
+      margin: -1,
+      overflow: 'hidden',
+      padding: 0,
+      position: 'absolute',
+      top: 20,
+      width: 1,
+    },
+  }),
+);
+
+interface IEnhancedTableProps<T> {
+  defaultOrderByPropertyName: keyof T;
+  headerCells: IHeadCell<T>[];
+  rows: Array<T>;
+  children?: ReactNode;
+  dateProperty: keyof T;
+  toolbar: ReactElement;
+}
+
+interface IEnhancedTableContext<T> {
+  headerCells: IHeadCell<T>[];
+  data: T[];
+}
+
+type ContextType<T = any> = IEnhancedTableContext<T>;
+export const EnhancedTableContext = createContext<ContextType>({
+  data: [] as any[],
+  headerCells: [] as IHeadCell<any>[],
+});
+
+function EnhancedTable<T> (props: IEnhancedTableProps<T>): ReactElement {
+  // Styles.
+  const classes = useStyles();
+
+  // State.
+  const [order, setOrder] = useState<Order>('asc');
+  const [orderBy, setOrderBy] = useState<keyof T>(props.defaultOrderByPropertyName);
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+  // Methods.
+  function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
+    if (b[orderBy] < a[orderBy]) {
+      return -1;
+    }
+    if (b[orderBy] > a[orderBy]) {
+      return 1;
+    }
+    return 0;
+  }
+
+  function stableSort<T>(array: any[], comparator: (a: T, b: T) => number) {
+    const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
+    stabilizedThis.sort((a, b) => {
+      const order = comparator(a[0], b[0]);
+      if (order !== 0) return order;
+      return a[1] - b[1];
+    });
+    return stabilizedThis.map((el) => el[0]);
+  }
+
+  function getComparator<Key extends keyof any>(
+    order: Order,
+    orderBy: Key,
+  ): (a: { [key in Key]: number | string }, b: { [key in Key]: number | string }) => number {
+    return order === 'desc'
+      ? (a, b) => descendingComparator(a, b, orderBy)
+      : (a, b) => -descendingComparator(a, b, orderBy);
+  }
+
+  const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof T) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
+  };
+
+  const handleChangePage = (event: unknown, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  return (
+    <EnhancedTableContext.Provider
+      value={{
+        data: props.rows,
+        headerCells: props.headerCells,
+      }}
+    >
+      <div className={classes.root}>
+        <div className={classes.paper}>
+          {props.toolbar}
+          <TableContainer style={{ overflow: "auto" }}>
+            <Table
+              className={classes.table}
+              aria-labelledby="tableTitle"
+              size="medium"
+              aria-label="enhanced table"
+            >
+              <EnhancedTableHeader
+                headCells={props.headerCells}
+                order={order}
+                orderBy={orderBy.toString()}
+                onRequestSort={handleRequestSort}
+                rowCount={props.rows.length}
+              />
+              <TableBody>
+                {stableSort(props.rows, getComparator(order, orderBy))
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row: any, index: number) => {
+                    return (
+                      <TableRow hover={true} tabIndex={-1} key={index}>
+                        {props.headerCells.map(
+                          (header: IHeadCell<T>, index: number) => (
+                            <TableCell key={index}>
+                              {header.renderValue
+                                ? header.renderValue(row)
+                                : header.propertyName
+                                ? row[header.propertyName]
+                                : ""}
+                            </TableCell>
+                          )
+                        )}
+                      </TableRow>
+                    )
+                  })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={props.rows.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onChangePage={handleChangePage}
+            onChangeRowsPerPage={handleChangeRowsPerPage}
+          />
+        </div>
+      </div>
+    </EnhancedTableContext.Provider>
+  )
+}
+
+export default EnhancedTable;

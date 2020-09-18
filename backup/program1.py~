@@ -1,0 +1,11 @@
+def multiply(function):
+  return lambda x : x * function(x)
+
+def sum_10(number):
+  return number + 10
+
+
+aply_multiplication = multiply(sum_10)
+multiplication = aply_multiplication(5)
+
+print(f'multiplication: {multiplication}')

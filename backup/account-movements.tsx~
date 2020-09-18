@@ -1,0 +1,58 @@
+import React, { FC } from "react";
+import { Card, CardContent, Divider, Paper } from "@material-ui/core";
+import { BarChart } from "@material-ui/icons";
+import AccountMovement from "../../../models/account-movement";
+import ProductSubtitle from "../product-subtitle";
+import EnhancedTable from "../../../components/enhanced-table";
+import IHeadCell from "models/ihead-cell";
+import EnhancedToolbar from "components/enhanced-table/enhanced-toolbar";
+import DefaultCurrencyFormat from "components/default-currency-format";
+
+interface IAccountMovementsProps {
+  movements: Array<AccountMovement>;
+  filterData: (data: AccountMovement[]) => void;
+  filteredMovements: Array<AccountMovement>;
+}
+
+const AccountMovements: FC<IAccountMovementsProps> = ({ movements, filterData, filteredMovements }) => {
+  const headers: IHeadCell<AccountMovement>[] = [
+    { label: "Código", propertyName: "code" },
+    { label: "Fecha", propertyName: "dateInNormalFormat" },
+    { label: "Monto", propertyName: "ammount" },
+    { label: "Descripción", propertyName: "description" },
+    {
+      label: "Balance de Cuenta",
+      propertyName: "accountBalance",
+      renderValue: (movement: AccountMovement) => (
+        <DefaultCurrencyFormat value={movement.accountBalance} />
+      ),
+    },
+  ]
+
+  return (
+    <Card variant="outlined">
+      <CardContent>
+        <ProductSubtitle primary="Movimientos de cuenta" icon={BarChart} />
+      </CardContent>
+      <Divider />
+      <CardContent>
+        <EnhancedTable
+          rows={filteredMovements}
+          headerCells={headers}
+          dateProperty="date"
+          defaultOrderByPropertyName="code"
+          toolbar={
+            <EnhancedToolbar
+              dateProperty="date"
+              data={movements}
+              filteredData={filteredMovements}
+              filterData={filterData}
+            />
+          }
+        />
+      </CardContent>
+    </Card>
+  )
+}
+
+export default AccountMovements;

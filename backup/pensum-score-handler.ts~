@@ -1,0 +1,88 @@
+import Subject from "./subject";
+import electives from "./electives";
+import {JSDOM} from "jsdom";
+
+class PensumScoreHandler {
+  private _notYetTaken: Subject[];
+  get notYetTaken(): Subject[] {
+    return this._notYetTaken;
+  }
+
+  private _notYetTakenCreditsTotal: number;
+  get notYetTakenCreditsTotal(): number {
+    return this._notYetTakenCreditsTotal;
+  }
+
+  private _notYetTakenForEachTrimester: Array<Subject[]>;
+  get notYetTakenForEachTrimester(): Array<Subject[]> {
+    return this._notYetTakenForEachTrimester;
+  }
+
+  private _completedElectives: Record<string, string>;
+  get completedElectives(): Record<string, string> {
+    return this._completedElectives;
+  }
+
+  constructor(html: JSDOM) {
+    const container = html.window.document.body.getElementsByClassName("uk-width-1-1 print-table")[0];
+    console.log('container: ', container);
+    const trimesters = container.getElementsByTagName("tbody");
+
+    console.log('trimesters: ', trimesters);
+
+    this._notYetTaken = [] as Subject[];
+    this._completedElectives = {};
+    this._notYetTakenCreditsTotal = 0;
+    this._notYetTakenForEachTrimester = this.computeSubjects(trimesters);
+  }
+
+  private computeSubjects(trimesters: HTMLCollectionOf<HTMLTableSectionElement>): Array<Subject[]> {
+    const subjectsRest = [] as Array<Subject[]>
+    for(let i = 0; i < trimesters.length; i++) {
+      const trimester = trimesters[i];
+      subjectsRest.push(this.findSubjectsRest(trimester));
+    }
+
+    return subjectsRest;
+  }
+
+  private findSubjectsRest(trimester: HTMLElement): Subject[] {
+    const subjects = [] as Subject[];
+
+    const subjectsTable = trimester.getElementsByTagName("tr");
+
+    for(let i = 0; i < subjectsTable.length; i++) {
+      const subjectRow = subjectsTable[i];
+      const columns = subjectRow.getElementsByTagName("td");
+
+      console.log('columns: ', columns);
+
+      if(columns.length != 12)
+        continue;
+
+      try{
+        const subject = Subject.fromHtmlCollection(columns);
+        const isElective = subject.code in electives && subject.category.length === 0;
+        if(isElective) {
+          const hasBeenAlreadyTaken = subject.code in this._completedElectives;
+          if(hasBeenAlreadyTaken)
+            continue;
+
+          this._completedElectives[subject.code] = subject.name;
+        }
+
+        this._notYetTaken.push(subject);
+        this._notYetTakenCreditsTotal += parseInt(subject.credits, 10);
+
+        subjects.push(subject);
+      } catch(e) {
+        console.log(e);
+        continue;
+      }
+    }
+
+    return subjects;
+  }
+}
+
+export default PensumScoreHandler;

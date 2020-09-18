@@ -1,0 +1,238 @@
+import React, { FC, useState } from "react"
+import {
+  Typography,
+  Button,
+  FormControl,
+  Hidden,
+  Box,
+  useMediaQuery,
+  TextField,
+  Icon,
+} from "@material-ui/core"
+import { useTheme } from "@material-ui/core/styles";
+import {PaymentsAndTransfersProps} from ".";
+import MultiModalSelect from "components/multi-modal-select";
+import Account from "models/account";
+import { ArrowDropDown, MonetizationOn, AccountBalance, ArrowForward, ArrowDownward, Send } from "@material-ui/icons";
+import AccountReview from "./account-review";
+import Beneficiary from "models/beneficiary";
+import DefaultCurrencyFormat from "components/default-currency-format";
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import CurrencyInput from "components/currency-input";
+import AddIcon from '@material-ui/icons/Add';
+import AddBeneficiary from "./add-beneficiary";
+
+const useStyles = makeStyles((theme: Theme) => ({
+  originAndDestinyContainer: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    [theme.breakpoints.down("sm")]: {
+      flexDirection: "column",
+      alignItems: "flex-start"
+    },
+  },
+  arrow: {
+    marginLeft: theme.spacing(4),
+    marginRight: theme.spacing(4),
+  },
+  buttonFormControl: {
+    [theme.breakpoints.down("sm")]: {
+      width: "100%"
+    }
+  },
+  originAndDestinyButton: {
+    textTransform: "none",
+    justifyContent: "flex-start"
+  },
+  addBeneficiaryDiv: {
+    display: "flex",
+    flexDirection: "column",
+
+  }
+}))
+
+export interface IPaymentsAndTransfersProps extends PaymentsAndTransfersProps {}
+
+const PaymentAndTransfers: FC<IPaymentsAndTransfersProps> = ({ accounts, beneficiaries }) => {
+  const classes = useStyles();
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down("md"));
+  const [selectedAccount, setSelectdAccount] = useState(accounts[0]);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [selectedBeneficiary, setSelectedBeneficiary] = useState(beneficiaries[0]);
+  const [beneficiaryModalIsOpen, setBenefciaryModalIsOpen] = useState(false);
+
+  function handleSelectedAccount(account?: Account) {
+    setModalIsOpen(false);
+
+    if(account)
+      setSelectdAccount(account);
+  }
+
+  function handleSelectedBeneficiary(beneficiary?: Beneficiary) {
+    setBenefciaryModalIsOpen(false);
+
+    if(beneficiary)
+      setSelectedBeneficiary(beneficiary);
+  }
+
+  function renderAccountReview(account: Account, spacing: number = 2) {
+    return (
+      <div style={{ flexGrow: 1 }}>
+        <AccountReview
+          title={account.type.toString()}
+          subtitle={account.accountNumber}
+          value={
+            <DefaultCurrencyFormat
+              value={account.availableBalance}
+              prefix="Disponible: RD$ "
+            />
+          }
+          icon={MonetizationOn}
+          spacing={spacing}
+        />
+      </div>
+    )
+  }
+
+  function renderBeneficiary(beneficiary: Beneficiary, spacing: number = 2) {
+    return (
+      <div style={{ flexGrow: 1 }}>
+        <AccountReview
+          title={beneficiary.name}
+          subtitle={beneficiary.accountNumber}
+          value={beneficiary.bankName}
+          icon={AccountBalance}
+          spacing={spacing}
+        />
+      </div>
+    )
+  }
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column" }}>
+      <Typography variant="h3">Realizar transferencia</Typography>
+
+      <br />
+
+      <div className={classes.originAndDestinyContainer}>
+        {/* Origin account */}
+        <FormControl className={classes.buttonFormControl}>
+          <Typography variant="overline">Cuenta de origen</Typography>
+          <Button
+            classes={{ root: classes.originAndDestinyButton }}
+            fullWidth={matches}
+            aria-label="more"
+            id="origin-account"
+            aria-controls="long-menu"
+            aria-haspopup="true"
+            variant="outlined"
+            endIcon={<ArrowDropDown />}
+            onClick={() => setModalIsOpen(true)}
+          >
+            {renderAccountReview(selectedAccount, 1)}
+          </Button>
+        </FormControl>
+
+        <Hidden smDown={true}>
+          <ArrowForward className={classes.arrow} />
+        </Hidden>
+
+        <Hidden mdUp={true}>
+          <ArrowDownward
+            style={{ alignSelf: "center", margin: theme.spacing(2) }}
+          />
+        </Hidden>
+
+        {/* Destiny account */}
+        <FormControl className={classes.buttonFormControl}>
+          <Typography variant="overline">Cuenta de destino</Typography>
+          <Button
+            classes={{ root: classes.originAndDestinyButton }}
+            aria-label="more"
+            fullWidth={matches}
+            id="origin-account"
+            aria-controls="long-menu"
+            aria-haspopup="true"
+            variant="outlined"
+            endIcon={<ArrowDropDown />}
+            onClick={() => setBenefciaryModalIsOpen(true)}
+          >
+            {renderBeneficiary(selectedBeneficiary, 1)}
+          </Button>
+        </FormControl>
+      </div>
+
+      <br />
+
+      {/* Ammount to transfer */}
+      <FormControl className={classes.buttonFormControl}>
+        <Typography variant="overline">Monto a transferir</Typography>
+        <TextField
+          fullWidth={matches}
+          required
+          id="outlined-required"
+          InputProps={{
+            inputComponent: CurrencyInput as any,
+          }}
+          defaultValue={10000}
+          variant="outlined"
+        />
+      </FormControl>
+
+      <br />
+
+      {/* Descripción */}
+      <FormControl className={classes.buttonFormControl}>
+        <Typography variant="overline">Descripción</Typography>
+        <TextField
+          required={false}
+          fullWidth={matches}
+          defaultValue={10000}
+          multiline={true}
+          variant="outlined"
+        />
+      </FormControl>
+
+      <Box m={3} />
+
+      <div>
+        <Button variant="contained" color="primary" endIcon={<Send />}>
+          Enviar transferencia
+        </Button>
+      </div>
+
+      <MultiModalSelect
+        title="Seleccionar cuenta de origen"
+        data={accounts}
+        selected={selectedAccount}
+        onClose={handleSelectedAccount}
+        renderItem={renderAccountReview}
+        open={modalIsOpen}
+      />
+
+      <MultiModalSelect
+        title="Seleccionar beneficiario"
+        data={beneficiaries}
+        selected={selectedBeneficiary}
+        onClose={handleSelectedBeneficiary}
+        renderItem={renderBeneficiary}
+        open={beneficiaryModalIsOpen}
+      >
+        <div className={classes.addBeneficiaryDiv}>
+          <Button variant="outlined" color="primary" startIcon={<AddIcon />}>
+            Agregar Beneficiario
+          </Button>
+
+          <br />
+
+          <AddBeneficiary />
+        </div>
+      </MultiModalSelect>
+    </div>
+  )
+}
+
+export default PaymentAndTransfers;

@@ -1,0 +1,40 @@
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using CoreApi.Data;
+using CoreApi.Models;
+
+namespace CoreApi.Services
+{
+  public class BaseService<T> : IBaseService<T> where T : BaseEntity
+  {
+    private DoraBankDbContext _context = null;
+    private DbSet<T> table = null;
+
+    public BaseService(DoraBankDbContext _context)
+    {
+      this._context = _context;
+      table = _context.Set<T>();
+    }
+
+    public IEnumerable<T> GetAll() => table.ToList();
+
+    public T GetById(object id) => table.Find(id);
+
+    public void Insert(T obj) => table.Add(obj);
+
+    public void Save() => _context.SaveChanges();
+
+    public void Update(T obj)
+    {
+      table.Attach(obj);
+      _context.Entry(obj).State = EntityState.Modified;
+    }
+
+    public void Delete(object id)
+    {
+      T existing = table.Find(id);
+      table.Remove(existing);
+    }
+  }
+}

@@ -1,0 +1,29 @@
+# H6 - Anagrams
+
+|<!---->|<!---->|
+|Date|
+
+## Statemnt
+
+Ve a [Kata 06: Anagrams](http://codekata.com/kata/kata06-anagrams/) y resuelve ese problema realizando lo siguiente con las restricciones de trabajo grupal estableciadas en clase:
+
+- Analisis CRC (tods)
+- TDD Main Logic (Parejas)
+- Programa de Consola (Parejas)
+
+## Considerations
+
+- Descarga el asunto en UTF-8.
+- El análisis que se haga debe ser case insensitive.
+- Las mismas cantidad de letras y orden, pero no importa el qué (si es mayúsculas o minúsculas).
+- Cualquier caracter además de un apóstrofe, será conside
+
+## Group
+
+|Nombre|Asignaciones|
+|Alexis Novas||
+|Angie Peña||
+|César López||
+|Frank Chávez||
+|Kemberly Nahely||
+|Mikhael Santos||

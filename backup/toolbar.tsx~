@@ -1,0 +1,67 @@
+import React, {useContext} from "react";
+import { createStyles, Theme, makeStyles, useTheme } from "@material-ui/core/styles";
+import { MainLayoutContext } from "../main-layout";
+import { Hidden, Drawer } from "@material-ui/core";
+import ToolbarList from "./toolbar-list";
+
+const useStyles = (drawerWidth: number) =>
+  makeStyles((theme: Theme) =>
+    createStyles({
+      drawer: {
+        [theme.breakpoints.up("sm")]: {
+          width: drawerWidth,
+          flexShrink: 0,
+        },
+      },
+      menuButton: {
+        marginRight: theme.spacing(2),
+        [theme.breakpoints.up("sm")]: {
+          display: "none",
+        },
+      },
+      drawerPaper: {
+        width: drawerWidth,
+      },
+    })
+  )
+
+interface ToolbarProps {
+  window?: () => Window;
+}
+
+function Toolbar({ window }: ToolbarProps) {
+  // Dependencies.
+  const { drawerWidth, mobileOpen, handleDrawerTogle } = useContext(MainLayoutContext);
+  const classes = useStyles(drawerWidth)();
+  const theme = useTheme()
+  const container = window !== undefined ? () => window().document.body : undefined;
+
+  return (
+    <nav className={classes.drawer} aria-label="mailbox folders">
+      <Hidden smUp={true} implementation="css">
+        <Drawer
+          container={container}
+          variant="temporary"
+          anchor={theme.direction === "rtl" ? "right" : "left"}
+          open={mobileOpen}
+          onClose={handleDrawerTogle}
+          classes={{ paper: classes.drawerPaper }}
+          ModalProps={{ keepMounted: true }}
+        >
+          <ToolbarList />
+        </Drawer>
+      </Hidden>
+      <Hidden xsDown implementation="css">
+        <Drawer
+          classes={{ paper: classes.drawerPaper }}
+          variant="permanent"
+          open={true}
+        >
+          <ToolbarList />
+        </Drawer>
+      </Hidden>
+    </nav>
+  )
+}
+
+export default Toolbar;

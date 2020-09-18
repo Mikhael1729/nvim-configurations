@@ -1,0 +1,231 @@
+import glob
+import json
+import os
+import re
+
+from os import listdir
+from abc import abstractmethod
+from models.element import Element
+from models.trimester import Trimester
+from helpers.config_provider import ConfigProvider
+
+from helpers.string_helper import StringHelper
+
+class BaseService:
+  @property
+  def directory_name(self):
+    return self.identifier_name + 's' if self.identifier_name else ''
+
+  @property
+  @abstractmethod
+  def identifier_name(self):
+    raise NotImplementedError
+
+  @property
+  @abstractmethod
+  def identifier(self):
+    raise NotImplementedError
+
+  @property
+  def base_url(self):
+    return self.__base_url
+
+  # The character to separate parts of the name of elements
+  @property
+  def separator(self):
+    return self.__separator
+
+  def __init__(self):
+    config = ConfigProvider.instance()
+    self.__base_url = config.base_url
+    self.__separator = config.separator
+
+  def add(self, codes_url, element):
+    # Generate a code number for the new element
+    new_code_number = self.__generate_element_code_number(codes_url)
+    print('new_code_number: ', new_code_number)
+    element.code_number = new_code_number
+    directory_url = self.create_directory(codes_url, element.name)
+
+    print('directory_url: ', directory_url)
+
+    # Generate the README.md
+    readme_url = os.path.join(directory_url, f"README.md")
+    readme_content = self.generate_readme_content(element)
+    readme_file = open(readme_url, 'a')
+    readme_file.write(readme_content)
+    readme_file.close()
+
+    print('readme_url: ', readme_url)
+
+    # Create the directory for each subject in the trimester (together wit its corresponding README.md).
+    sub_elements = self.generate_sub_elements(element)
+    print('sub_elements: ', sub_elements)
+    for sub_element in sub_elements:
+      print(sub_element)
+      self.save_sub_element(directory_url, sub_element)
+    # for i in range(len(sub_elements)):
+      # self.elements_handler()
+      # sub_elements[i].code_number = i + 1
+      # sub_element = sub_elements[i]
+
+      # # Create directory.
+      # sub_element_url = os.path.join(directory_url, sub_element.underscore_fullname)
+      # os.mkdir(sub_element_url)
+
+      # # Create README file.
+      # sub_url = os.path.join(sub_element_url, f"{sub_element.code}{self.__separator}README.md")
+      # sub_content = self.generate_sub_element_content(sub_element)
+      # sub_readme_file = open(sub_url, 'a+')
+      # sub_readme_file.write(sub_content)
+      # sub_readme_file.close()
+
+  @abstractmethod
+  def generate_sub_elements(self, element):
+    raise NotImplementedError
+
+  @abstractmethod
+  def save_sub_element(self, url, element):
+    print('O_url: ', url)
+    print('O_element: ', element)
+    os.mkdir(os.path.join(url, element))
+
+  @abstractmethod
+  def generate_readme_content(self, element):
+    raise NotImplementedError
+
+  def __create_readme(self, element, file_url):
+    readme_content = self.generate_readme_content(element)
+    readme_file = open(file_url, 'a')
+    readme_file.write(readme_content)
+    readme_file.close()
+
+  def __generate_element_code_number(self, codes_url):
+    # Create the new trimester.
+    last_element = self.get_last_or_default(codes_url)
+    new_number = (last_element.code_number + 1) if last_element else 1
+
+    return new_number
+
+  # TODO: Remove a new element instance, because is unnecessary.
+  def create_directory(self, codes_url, title_description = ''):
+    # Get base URL (Last trimester URL).
+    last_element = self.get_last_or_default(codes_url)
+
+    print('last_element: ', last_element)
+    new_element = Element(
+      code = self.identifier + str(last_element.code_number + 1 if last_element else 1),
+      name = title_description
+    )
+
+    # Create the directory for the new elment.
+    url = os.path.join(self.find_url(codes_url), new_element.underscore_fullname)
+    os.mkdir(url)
+    return url
+
+
+  def get_last_element_number(self):
+    elements = self.get_all()
+
+    if len(elements) > 0:
+      last_element_number = elements[-1].split('_')[0][1:]
+      if StringHelper.is_integer(last_element_number):
+        return int(last_element_number)
+
+    return 0
+
+  def get_last_or_default(self, codes_url):
+    all_elements = self.get_all(codes_url)
+    print('all_elements: ', all_elements)
+    last_element_name = all_elements[-1] if len(all_elements) else ''
+
+    if last_element_name:
+      o = Element.from_full_name(last_element_name)
+      print('o:: ', o)
+      print('o.code:: ', o.code)
+      return o
+    else:
+      return None
+
+  def get_all(self, codes_url):
+    # Get url of sub element.
+    print('codes_url: ', codes_url)
+    is_trimester = len(codes_url) >= 0
+    if not is_trimester:
+      focused_trimester = self.get_focused_trimester()
+
+      is_subject = codes_url[0] == Trimester.identifier
+      if is_subject:
+        element_url = self.find_url(focused_trimester)
+      else:
+        element_url = self.find_url(os.path.join(focused_trimester, codes_url))
+    else:
+      element_url = self.find_url(codes_url)
+
+    listdir = os.listdir(element_url)
+    elements = list(filter(self.filter_elements, listdir))
+    self.sort_alphanumerically(elements)
+
+    return elements
+
+  # Returns the directories full path of relative codes URL (like: s1/h2)
+  def find_url(self, code_url):
+    full_path = self.__base_url # Will store the directories full url of an specific resource.
+    codes = code_url.split('/') # Each position in the array represent an element who has an url to reach until that.
+
+    print('codes: ', codes)
+    print('s: code_ur: ', code_url)
+    
+    # Get the directories url of each code
+    for code in codes: 
+      if len(code):
+        # In the case there are more than one element with this code (for any reason)
+        all_directories = listdir(full_path)
+        filter_directories = lambda e: True if re.compile(code).match(e) else False
+        matches = list(filter(filter_directories, all_directories))
+
+        if matches:
+          StringHelper.sort_alphanumerically(matches)
+          match = matches[-1]
+          full_path = os.path.join(full_path, match)
+
+    # Add the element url.
+    full_path = os.path.join(full_path, self.directory_name) if self.directory_name else full_path
+
+    print('full_path: ', full_path)
+
+    return full_path
+
+  def get_focused_trimester(self):
+    trimester_code_in_config = ConfigProvider.instance().trimester
+    focused_trimester = trimester_code_in_config
+
+    if not trimester_code_in_config or trimester_code_in_config == 'last':
+      all_directories = os.listdir(self.__base_url)
+      print('all_directories: ', all_directories)
+      filter_elements = lambda string: self.filter_elements(string, Trimester.identifier)
+      trimester_directories = list(filter(filter_elements, all_directories))
+      StringHelper.sort_alphanumerically(trimester_directories)
+      print('trimester_directories: ', trimester_directories)
+      focused_trimester = trimester_directories[-1] if trimester_directories else None
+
+    return focused_trimester
+
+  def sort_alphanumerically(self, text_list):
+    text_list.sort(key = self.get_number)
+
+  def get_number(self, key):
+    code = key.split(self.separator)[0]
+    number = int(code[1:]) if code[1:].isdigit() else None
+
+    return number
+
+  def filter_elements(self, directory_name, identifier = None):
+    id = directory_name.split('_')[0][1:]
+    if StringHelper.is_integer(id):
+      regex = re.compile(f'{self.identifier if not identifier else identifier}[1-9]+')
+      if regex.match(directory_name):
+        return True
+
+    return False
+

@@ -1,0 +1,32 @@
+#include <iostream>
+#include <string>
+#include "graph/graph.cpp"
+#include "memory/memory.cpp"
+
+using namespace std;
+
+int main() {
+  auto graph = Graph::Graph<Memory>(false);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

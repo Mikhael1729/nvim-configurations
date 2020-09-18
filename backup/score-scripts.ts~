@@ -1,0 +1,73 @@
+import Subject from "./subject";
+import electives from "./electives";
+
+class PensumScoreHandler {
+  notYetTaken: Subject[];
+  notYetTakenCreditsTotal: number;
+  completedElectives: Record<string, string>;
+
+  constructor() {
+    const container = document.getElementsByClassName("uk-width-1-1 print-table")[0];
+    const trimesters = container.getElementsByTagName("tbody");
+
+    this.completedElectives = {};
+    this.notYetTakenCreditsTotal = 0;
+    this.notYetTaken = [];
+
+    this.computeSubjects(trimesters);
+  }
+
+  computeSubjects(trimesters: HTMLCollectionOf<HTMLTableSectionElement>) {
+    const subjectsRest = []; // Array<{ code, name, credits }>.
+    for(let i = 0; i < trimesters.length; i++) {
+      const trimester = trimesters[i];
+      subjectsRest.push(findSubjectsRest(trimester));
+    }
+
+    return subjectsRest;
+  }
+
+  findSubjectsRest(trimester: HTMLElement) {
+    const subjects = [] as Partial<Subject>[];
+
+    const subjectsTable = trimester.getElementsByTagName("tr");
+
+    for(let i = 0; i < subjectsTable.length; i++) {
+      const subjectRow = subjectsTable[i];
+      const columns = subjectRow.getElementsByTagName("td");
+
+      try{
+        const subject = Subject.fromHtmlCollection(columns);
+        const isElective = subject.code in electives && subject.category.length === 0;
+        if(isElective) {
+          const hasBeenAlreadyTaken = subject.code in this.completedElectives;
+          if(hasBeenAlreadyTaken)
+            continue;
+
+          this.completedElectives[subject.code] = subject.name;
+        }
+
+        this.notYetTaken.push(subject);
+        this.notYetTakenCreditsTotal += parseInt(subject.credits, 10);
+
+        subjects.push(subject);
+      } catch(e) {
+        console.log(e);
+        continue;
+      }
+    }
+
+    return subjects;
+  }
+
+  private computeCategory(columns: HTMLCollectionOf<HTMLTableDataCellElement>): string {
+    const code = columns[1].innerText;
+    const realCode = columns[11].innerText;
+    const hasNoClasification = code === realCode;
+    const category = hasNoClasification ? "" : code;
+
+    return category;
+  }
+}
+
+export default PensumScoreHandler;

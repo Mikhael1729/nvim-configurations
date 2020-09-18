@@ -1,0 +1,88 @@
+---
+title: Diseño de espacios de trabajo
+date: "2020-06-20T22:12:03.284Z"
+description: "Diseño de espacio de trabajo para estos días donde hay pandemia"
+---
+
+## ¿Serán obsoletas las oficinas tradicionales?
+
+Las oficinas tradicionales son cuartos o áreas de trabajo que empresas u organizaciones delimitan como lugar o espacio para realizar las tareas del negocio.
+
+Esta práctica no es precisamente nueva. El uso de una oficina como lugar de trabajo se remonta a la época clásica, Roma, donde escribanos hacían tareas administrativas tales como tratados y decretos, y estos lugares estaban proveídos de pergaminos para tales fines.
+
+En el caso del desarrollo de software, las oficinas siempre se han utilizado con el mismo propósito por el que otras actividades de trabajo se realizan en tales lugares: hacer uso de las herramientas que provee la organización, colaboración y trabajo en equipo, etc. Es de utilidad tener cerca a un compañero de oficina o de trabajo, ya que preguntas e inconvenientes pueden ser comunicados y/o resueltos rápidamente (por comentar una de las ventajas del trabajo en oficina).
+
+En estos últimos días ha surgido una pandemia producida por el SARS-CoV-2 en todo el mundo, lo que ha obligado a buena parte de las personas a matenerse alejadas de sus vecinos, manteniendose en casa. Las actividades que regularmente se realizan en oficinas tradicionales, principalmente en las áreas tecnológicas ahora se realizan casi en su totalidad fuera de las oficinas de trabajo. Este comportamiento se ha vuelto la norma en la actualidad.
+
+Que esta situación haya promovido la disminución de uso de oficinas tradicionales como lugar de trabajo no quiere decir en absoluto que quedarán obsoletas o en desuso. Cada modo de trabajo tiene ciertas ventajas que lo hacen preferible a otro.
+
+<img src="images/oficina.png" />
+
+## ¿Cómo preparar el espacio en la casa?
+
+Una alternativa a las oficinas tradionales es los espacios de trabajo desde casa. Son muchas las maneras en las que un espacio de trabajo para desarrollo de software se puede realizar de manera efectiva desde el hogar. Va a depender en gran medida de las herramientas y/o trabajos que se desarrollen.
+
+Una lista de elementos a tomar en cuenta para preparar un lugar de trabajo desde casa es como sigue:
+
+- Elegir un lugar en casa sin mucho ruido o distracciones.
+- Debe ser agradable.
+- Es recomendable tener luz de nuestro Sol. Es bueno, ya que nuestra biología está más adaptada a ese tipo de luz, y además, un lugar iluminado con luz solar es conveniente para ahorrar energia.
+- Consigue una mesa de trabajo. Una mesa es importante, ya que es donde se coloca el equipo y demás herramientas de trabajo para tenerlas a disposición. Existen mesasa las que se les puede adaptar el tamaño. Una de estas es bien conveniente, principalmente para aquellos que prefieren trabajar de pié o alternar entre trabajar sentados y parados.
+- Consigue una silla cómoda. Si se va a estar largo tiempo sentado, es recomendable tener una silla cómoda para evitar dolores del cuerpo por posturas fijas en tiempos prolongados en asientos sin acomodo. 
+
+
+## ¿Funcionaria algún formato hibrido: casa y oficina?
+
+Sí, un formato híbrido puede funcionar. De hecho un formato de ese estilo en el país es realmente una propuesta que vale la pena considerar. Gran parte de los trabajadores de oficina no tienen los mismos recursos o calidad de recursos que se obtienen en la oficina de la empresa, ya sea por un asunto del equipo de trabajo o problemas de conexión a Internet (una conexión lenta)
+
+### Esquema de espacio de trabajo híbrido
+
+En el contexto de la pandemia que hay en la actualidad, se deben tomar ciertas consideraciones para configurar un trabajo híbrido. 
+
+Buscando una opción que beneficie tanto a empleados como empladores, esta es mi propuesta de trabajo híbrido en el contexto actual:
+
+- Hacer que 50% de los empleados trabajen de manera remota. En este apartado se excluirían a los empleados que no tengan las condiciones adecuadas en su casa para realizar el trabajo remoto.
+- El porcentaje restante de empleados arrivarían al lugar de trabajo por algún tipo de transporte privado a aquellos empleados que no tengan vehículo propio para evitar contagios. En el país el transporte público no es precisamente el adecuado para evitar contagios.
+- También, la empresa debe proveer ciertos insumos básicos de higiene personal para evitar contagios y de indicar como obligatorio el uso de mascarillas.
+- Los trabajadores que se encuentran trabajando de manera remota deberán presentarse de manera presencial en el caso de que sea requerido o lo solicite (siempre y cuando no sobre pase la cantidad límite de personas establecidas en la empresa con trabajadores dentro).
+
+## ¿Cuáles son sus recomendaciones para los empleadores y los empleados?
+
+### Empleadores
+
+Yo recomendaría no hacer uso de oficinas para programar en equipo, si no que haría todo tipo de trabajo de manera remota (en el contexto de desarrollo de software). Solo utilizar reuniones de trabajo presenciales cuando sea absolutamente necesario.
+
+Como el tipo de interacción sería virtual, básicamente, es bueno escoger la herramienta de comunicación online más apropiada para el equipo, ya sea para video llamadas o mensajería.
+
+Y con respecto a mantener a los empleados siendo productivos, buscaría herramientas que permitan medir o incentivar la productividad de ellos. Sucede que, por la cultura del país, los empleados suelen aletargarse en sus tareas al trabajar de forma virtual; es por eso por lo que es importante tomar alguna medida al respecto.
+
+Gracias a la situación actual, muchas empresas o instituciones que ofrecen cursos online han puesto gratis de alguna u otra forma parte o la totalida de su contenido didáctico. Sería bueno aprovechar esta oportuindad para capacitar a los empleados en las tecnologías con las que trabajan y así aportar valor al negocio
+
+### Empleados
+
+Buscar un buen lugar de trabajo en casa. Como más arriba mencionaba, un buen espacio de trabajo es importante. Si no se tiene, notificarlo al empleador para que esté al tanto de la situación y así pueda realizar sugerencias o aportar soluciones.
+
+Mantener buena comunicación con el equipo con el que se trabaja. De esta manera se evitan problemas y costos de tiempo y esfuerzo por no tener claro los objetivos de las asignaciones que le sean asiganadas.
+
+<img src="images/future.png" />
+
+
+## Futuro
+
+Con respecto a los espacios de trabajo en el contexto de la situación actual:
+
+### A corto plazo (6 a 12 meses)
+
+- Entiendo que gran parte de los trabajos que se vayan a conseguir se harán de forma remota (no en oficionas tradicionales).
+- Puede que esto ayude a conseguir empleos remotos más fácilmente, para aquellos que los desean.
+
+### A mediano plazo (12 a 24 meses)
+
+Ya en este punto, es probable que ya existan medidas tomadas por el gobierno que habiliten o permitan las actividades regulares por lo que entiendo que:
+
+- Se retomará el trabajo de oficina regular
+- Es probable que la cantidad de trabajos en modalidad remoto sean mayores de los que había antes de la situación actual con repecto a la pandemia.
+
+### Largo plazo (25 meses o más)
+
+Entiendo que para este punto gran parte del mercado debería estar en la normalidad, y la cantidad de trabajo remoto sería menos con respecto a la cantidad que hay ahora, por ejemplo, gracias a la situación actual. Sin embargo, es probable que queden ciertas diferencias, y tal vez nuevas oportunidades de trabajo del tipo no tradicional de oficina.

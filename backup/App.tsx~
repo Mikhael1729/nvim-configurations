@@ -1,0 +1,29 @@
+import React, { FC, useState, ChangeEvent } from 'react';
+import Remarkable from "remarkable";
+
+const App: FC<{}> = () => {
+  const [text, setText] = useState("");
+  const markdown = new Remarkable();
+  console.log(markdown.render("# Hello, world!"))
+
+  function handleChange(e: ChangeEvent<HTMLTextAreaElement>): void {
+    setText(e.target.value); 
+  }
+
+  return (
+    <>
+      <h2>Input</h2>
+      <textarea
+        id="markdown-content"
+        onChange={handleChange}
+        defaultValue={text}
+      />
+
+    <h2>Output</h2>
+
+    {}
+    </>
+  );
+}
+
+export default App;

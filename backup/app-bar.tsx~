@@ -1,0 +1,86 @@
+import React, { useContext } from "react"
+import {
+  AppBar as MaterialAppBar,
+  Toolbar,
+  Button,
+  IconButton,
+  Typography,
+  Divider, } from "@material-ui/core";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
+import {MainLayoutContext} from "../main-layout";
+import ProfileButton from "./profile-button/profile-button";
+import MenuIcon from '@material-ui/icons/Menu';
+
+const useStyles = (drawerWidth: number) =>
+  makeStyles((theme: Theme) =>
+    createStyles({
+      appBar: {
+        [theme.breakpoints.up("sm")]: {
+          width: `calc(100% - ${drawerWidth}px)`,
+          marginLeft: drawerWidth,
+        },
+        backgroundColor: theme.palette.background.default,
+        marginBottom: 100,
+      },
+      menuButton: {
+        marginRight: theme.spacing(2),
+        [theme.breakpoints.up("sm")]: {
+          display: "none",
+        },
+      },
+      startContent: {
+        flexGrow: 1,
+      },
+      endContent: {
+      },
+      profileImage: {
+        borderRadius: "50%",
+        marginLeft: 10
+      }
+  })
+);
+
+interface AppBarProps {
+  title?: string;
+  children?: React.ReactNode;
+}
+
+function AppBar({ title, children } : AppBarProps) {
+  const { drawerWidth, handleDrawerTogle } = useContext(MainLayoutContext);
+  const classes = useStyles(drawerWidth)();
+
+  return (
+    <>
+      <MaterialAppBar
+        position="fixed"
+        color="transparent"
+        className={classes.appBar}
+        elevation={0}
+      >
+        <Toolbar>
+          <IconButton
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerTogle}
+            className={classes.menuButton}
+          >
+            <MenuIcon />
+            {title ? (
+              <Typography variant="h6" noWrap={true}>
+                {title}
+              </Typography>
+            ) : null}
+          </IconButton>
+          <div className={classes.startContent}>{children}</div>
+          <div className={classes.endContent}>
+            <ProfileButton />
+          </div>
+        </Toolbar>
+
+        <Divider />
+      </MaterialAppBar>
+    </>
+  )
+}
+
+export default AppBar
