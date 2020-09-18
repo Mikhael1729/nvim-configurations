@@ -59,7 +59,7 @@ call plug#end()
 
 " SETTINGS
 colorscheme gruvbox
-highlight Normal ctermbg=black
+" highlight Normal ctermbg=black
 set smarttab
 set cindent
 set tabstop=2
@@ -121,6 +121,7 @@ nnoremap <C-b> :NERDTreeToggle<CR>
 nnoremap <C-p> :Files<CR>
 nnoremap <C-g> :GFiles<CR>
 nnoremap <C-f> :Ag<CR>
+nnoremap <silent> <leader>ec :e $MYVIMRC<CR>
 
 " Can be typed even faster than jj, and if you are already in
 "    normal mode, you (usually) don't accidentally move:
