@@ -1,9 +1,0 @@
-﻿using static System;
-
-namespace BiteNuget
-{
-    public class Class1
-    {
-      public static Method1() => WriteLine("Bite Nuget. >:3");
-    }
-}

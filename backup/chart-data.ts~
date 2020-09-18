@@ -1,9 +1,0 @@
-class ChartData {
-  label: string | number;
-  value: string | number;
-
-  constructor(chartData: Partial<ChartData>) {
-    this.label = chartData.label || "";
-    this.value = chartData.value || 0;
-  }
-}

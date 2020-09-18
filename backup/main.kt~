@@ -1,7 +1,0 @@
-@file:JvmName("Hello")
-
-package org.example
-
-fun main() {
-  println("Hello, world!")
-}

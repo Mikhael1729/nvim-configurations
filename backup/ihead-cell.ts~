@@ -1,9 +1,0 @@
-import { ReactElement } from "react";
-
-interface IHeadCell<T> {
-  propertyName: keyof T;
-  label: string;
-  renderValue?: (element: T) => string | number | ReactElement;
-}
-
-export default IHeadCell;

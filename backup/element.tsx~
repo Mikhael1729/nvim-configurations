@@ -1,7 +1,0 @@
-import React, { FC } from "react";
-
-const Element: FC = (props) => {
-  return <h2>Hey, this is the element!</h2>;
-}
-
-export default Element;

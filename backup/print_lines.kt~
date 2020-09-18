@@ -1,6 +1,0 @@
-import java.io.File
-
-fun main(args: Array<String>) {
-  String path = args.get(0)
-  File(path).forEachLine { line: String -> println(line) }
-}

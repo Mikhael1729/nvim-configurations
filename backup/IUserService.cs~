@@ -1,8 +1,0 @@
-using Core.Models;
-using CoreApi.Data;
-
-namespace CoreApi.Services
-{
-  public interface IUserService : IBaseService<User>
-  {  }
-}
