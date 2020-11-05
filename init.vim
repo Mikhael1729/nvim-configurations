@@ -30,7 +30,7 @@ Plug 'fatih/vim-go', { 'tag': '*' }
 Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
 
 " Plugin outside ~/.vim/plugged with post-update hook
-set rtp+=~/.fzf
+set rtp+=/usr/local/opt/fzf
 Plug 'junegunn/fzf.vim'
 
 " Gruvbox theme
@@ -57,17 +57,6 @@ Plug 'tpope/vim-surround'
 " Initialize plugin system
 call plug#end()
 
-" SETTINGS
-colorscheme gruvbox
-highlight Normal ctermbg=none guibg=none
-set smarttab
-set cindent
-set tabstop=2
-set shiftwidth=2
-" always uses spaces instead of tab characters
-set expandtab
-
-set number
 
 " Snippets
 
@@ -222,8 +211,6 @@ nmap <leader>f  <Plug>(coc-format-selected)
 " Closetag config
 
 " filenames like *.xml, *.html, *.xhtml, ...
-" These are the file extensions where this plugin is enabled.
-"
 let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.jsx,*.tsx'
 
 " filenames like *.xml, *.xhtml, ...
@@ -261,3 +248,87 @@ let g:closetag_shortcut = '>'
 " Add > at current position without closing the current tag, default is ''
 "
 let g:closetag_close_shortcut = '<leader>>'
+
+" SETTINGS
+colorscheme gruvbox
+highlight Normal ctermbg=none guibg=none
+
+set smarttab
+set cindent
+
+set tabstop=2
+set shiftwidth=2
+set expandtab " always uses spaces instead of tab characters
+
+set number
+
+filetype plugin on
+autocmd FileType python setlocal noexpandtab shiftwidth=2 softtabstop=2
+
+" noremap <silent> k gk
+" noremap <silent> j gj
+" noremap <silent> 0 g0
+" noremap <silent> $ g$
+
+" nnoremap j gj
+" nnoremap k gk
+" vnoremap j gj
+" vnoremap k gk
+" nnoremap <Down> gj
+" nnoremap <Up> gk
+" vnoremap <Down> gj
+" vnoremap <Up> gk
+" inoremap <Down> <C-o>gj
+" inoremap <Up> <C-o>gk
+
+noremap <silent> <Leader>w :call ToggleWrap()<CR>
+function ToggleWrap()
+  if &wrap
+    echo "Wrap OFF"
+    setlocal nowrap
+    set virtualedit=all
+    silent! nunmap <buffer> <Up>
+    silent! nunmap <buffer> <Down>
+    silent! nunmap <buffer> <Home>
+    silent! nunmap <buffer> <End>
+    silent! iunmap <buffer> <Up>
+    silent! iunmap <buffer> <Down>
+    silent! iunmap <buffer> <Home>
+    silent! iunmap <buffer> <End>
+  else
+    echo "Wrap ON"
+    setlocal wrap linebreak nolist
+    set virtualedit=
+    setlocal display+=lastline
+    noremap  <buffer> <silent> <Up>   gk
+    noremap  <buffer> <silent> <Down> gj
+    noremap  <buffer> <silent> <Home> g<Home>
+    noremap  <buffer> <silent> <End>  g<End>
+    inoremap <buffer> <silent> <Up>   <C-o>gk
+    inoremap <buffer> <silent> <Down> <C-o>gj
+    inoremap <buffer> <silent> <Home> <C-o>g<Home>
+    inoremap <buffer> <silent> <End>  <C-o>g<End>
+  endif
+endfunction
+
+noremap <silent> <Leader>u :call ToggleWrap2()<CR>
+function ToggleWrap2()
+  if &wrap
+    echo "Wrap OFF"
+    setlocal nowrap
+    set virtualedit=all
+    silent! nunmap  <buffer> k
+    silent! nunmap  <buffer> j
+    silent! nunmap  <buffer> 0
+    silent! nunmap  <buffer> $
+  else
+    echo "Wrap ON"
+    setlocal wrap linebreak nolist
+    set virtualedit=
+    setlocal display+=lastline
+    noremap  <buffer> <silent> k gk
+    noremap  <buffer> <silent> j gj
+    noremap  <buffer> <silent> 0 g0
+    noremap  <buffer> <silent> $ g$
+  endif
+endfunction
