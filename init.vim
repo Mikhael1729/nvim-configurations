@@ -30,7 +30,8 @@ Plug 'fatih/vim-go', { 'tag': '*' }
 Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
 
 " Plugin outside ~/.vim/plugged with post-update hook
-set rtp+=/usr/local/opt/fzf
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+" set rtp+=/usr/local/opt/fzf
 Plug 'junegunn/fzf.vim'
 
 " Gruvbox theme
@@ -54,6 +55,11 @@ Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
 Plug 'tpope/vim-surround'
 
+Plug 'ferrine/md-img-paste.vim'
+
+" Comments
+Plug 'preservim/nerdcommenter'
+
 " Initialize plugin system
 call plug#end()
 
@@ -74,6 +80,10 @@ let g:coc_snippet_prev = '<c-k>'
 
 " Use <C-j> for both expand and jump (make expand higher priority.)
 imap <C-j> <Plug>(coc-snippets-expand-jump)
+
+" Markdown image
+autocmd FileType markdown nmap <buffer><silent> <leader>i :call mdip#MarkdownClipboardImage()<CR>
+let g:mdip_imgdir = '.'
 
 " Prefer rg > ag > ack
 " https://hackercodex.com/guide/vim-search-find-in-project/
@@ -265,6 +275,9 @@ set number
 filetype plugin on
 autocmd FileType python setlocal noexpandtab shiftwidth=2 softtabstop=2
 
+
+autocmd TermOpen * setlocal nonu
+
 " noremap <silent> k gk
 " noremap <silent> j gj
 " noremap <silent> 0 g0
@@ -332,3 +345,6 @@ function ToggleWrap2()
     noremap  <buffer> <silent> $ g$
   endif
 endfunction
+
+" Leader
+map <Space> <Leader>
