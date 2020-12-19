@@ -10,8 +10,20 @@ vmap <C-j> <Plug>(coc-snippets-select)
 imap <C-j> <Plug>(coc-snippets-expand-jump)
 
 "" Markdown image
+" autocmd FileType markdown nmap <buffer><silent> <leader>i :call mdip#MarkdownClipboardImage()<CR>
 
-autocmd FileType markdown nmap <buffer><silent> <leader>i :call mdip#MarkdownClipboardImage()<CR>
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
 
 ""
 inoremap <silent><expr> <TAB>
@@ -137,3 +149,5 @@ noremap <silent> <Leader>u :call ToggleWrap2()<CR>
 " Leader
 map <Space> <Leader>
 
+" Indentation
+nnoremap <Leader>i :call ToggleIndentationMode()<CR>

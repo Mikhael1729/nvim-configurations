@@ -4,12 +4,9 @@ highlight Normal ctermbg=none guibg=none
 
 set smarttab
 set cindent
-
-set tabstop=2
-set shiftwidth=2
-set expandtab " always uses spaces instead of tab characters
-
 set number
+
+call UseSpaces()
 
 filetype plugin on
 autocmd FileType python setlocal noexpandtab shiftwidth=2 softtabstop=2

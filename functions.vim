@@ -1,16 +1,3 @@
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-
 function ToggleWrap()
   if &wrap
     echo "Wrap OFF"
@@ -62,8 +49,8 @@ function ToggleWrap2()
 endfunction
 
 function! UseTabs()
-  set tabstop=4     " Size of a hard tabstop (ts).
-  set shiftwidth=4  " Size of an indentation (sw).
+  set tabstop=2     " Size of a hard tabstop (ts).
+  set shiftwidth=2  " Size of an indentation (sw).
   set noexpandtab   " Always uses tabs instead of space characters (noet).
   set autoindent    " Copy indent from current line when starting a new line (ai).
 endfunction
@@ -75,4 +62,17 @@ function! UseSpaces()
   set softtabstop=0 " Number of spaces a <Tab> counts for. When 0, featuer is off (sts).
   set autoindent    " Copy indent from current line when starting a new line.
   set smarttab      " Inserts blanks on a <Tab> key (as per sw, ts and sts).
+endfunction
+
+let withSpaces = "true"
+function! ToggleIndentationMode()
+  if g:withSpaces == "true"
+    echo "Change to spaces indentation"
+    call UseSpaces()
+    let g:withSpaces = "false"
+  else
+    echo "Change to tabs indentation"
+    call UseTabs()
+    let g:withSpaces = "true"
+  endif
 endfunction
