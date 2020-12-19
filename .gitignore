@@ -4,4 +4,9 @@
 !.gitignore
 !coc-settings.json
 !init.vim
+!functions.vim
+!plugs.vim
+!settings.vim
+!shortcuts.vim
+!variables.vim
 
