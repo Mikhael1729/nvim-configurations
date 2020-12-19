@@ -276,7 +276,12 @@ filetype plugin on
 autocmd FileType python setlocal noexpandtab shiftwidth=2 softtabstop=2
 
 
+" Don't show line numbers in terminal mode.
 autocmd TermOpen * setlocal nonu
+
+" I think this helpls to the indentation for Python files.
+let g:python_recommended_style = 0
+let g:pymode_indent = v:false
 
 " noremap <silent> k gk
 " noremap <silent> j gj
@@ -348,3 +353,19 @@ endfunction
 
 " Leader
 map <Space> <Leader>
+
+function! UseTabs()
+  set tabstop=4     " Size of a hard tabstop (ts).
+  set shiftwidth=4  " Size of an indentation (sw).
+  set noexpandtab   " Always uses tabs instead of space characters (noet).
+  set autoindent    " Copy indent from current line when starting a new line (ai).
+endfunction
+
+function! UseSpaces()
+  set tabstop=2     " Size of a hard tabstop (ts).
+  set shiftwidth=2  " Size of an indentation (sw).
+  set expandtab     " Always uses spaces instead of tab characters (et).
+  set softtabstop=0 " Number of spaces a <Tab> counts for. When 0, featuer is off (sts).
+  set autoindent    " Copy indent from current line when starting a new line.
+  set smarttab      " Inserts blanks on a <Tab> key (as per sw, ts and sts).
+endfunction
