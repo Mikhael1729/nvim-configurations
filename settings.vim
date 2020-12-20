@@ -6,7 +6,7 @@ set smarttab
 set cindent
 set number
 
-call UseSpaces()
+call ToggleIndentationMode()
 
 filetype plugin on
 autocmd FileType python setlocal noexpandtab shiftwidth=2 softtabstop=2

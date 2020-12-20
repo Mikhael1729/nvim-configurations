@@ -64,15 +64,14 @@ function! UseSpaces()
   set smarttab      " Inserts blanks on a <Tab> key (as per sw, ts and sts).
 endfunction
 
-let withSpaces = "true"
 function! ToggleIndentationMode()
-  if g:withSpaces == "true"
+  if g:with_spaces == "true"
     echo "Change to spaces indentation"
     call UseSpaces()
-    let g:withSpaces = "false"
+    let g:with_spaces = "false"
   else
     echo "Change to tabs indentation"
     call UseTabs()
-    let g:withSpaces = "true"
+    let g:with_spaces = "true"
   endif
 endfunction

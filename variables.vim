@@ -72,3 +72,6 @@ let g:closetag_close_shortcut = '<leader>>'
 " I think this helpls to the indentation for Python files.
 let g:python_recommended_style = 0
 let g:pymode_indent = v:false
+
+"## My globals ##
+let g:with_spaces = "true" " Defines the default mode for indentation (if true: use spaces else tabs)
