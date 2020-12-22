@@ -151,3 +151,9 @@ map <Space> <Leader>
 
 " Indentation
 nnoremap <Leader>i :call ToggleIndentationMode()<CR>
+
+" Copy and paste
+vnoremap <Leader>y "+y
+vnoremap <Leader>p "+p
+
+nnoremap <C-x> :call BindAllWindows()<CR>

@@ -75,3 +75,16 @@ function! ToggleIndentationMode()
     let g:with_spaces = "true"
   endif
 endfunction
+
+function! BindAllWindows()
+  if g:bind_windows == "false"
+    windo set scrollbind
+    let g:bind_windows = "true"
+    echo "BIND WINDOWS (activated)"
+  else
+    windo set noscrollbind
+    let g:bind_windows = "false"
+    echo "BIND WINDOWS (deactiviated)"
+  endif
+endfunction
+

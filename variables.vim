@@ -75,3 +75,5 @@ let g:pymode_indent = v:false
 
 "## My globals ##
 let g:with_spaces = "true" " Defines the default mode for indentation (if true: use spaces else tabs)
+
+let g:bind_windows = "false"
