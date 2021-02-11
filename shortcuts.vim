@@ -1,4 +1,10 @@
 "" Snnipets
+" You need to have installed Rg
+nnoremap <c-a> :Rg<CR>
+command! -bang -nargs=* Ag
+  \ call fzf#vim#grep(
+  \   'ag --column --numbers --noheading --color --smart-case '.shellescape(<q-args>), 1,
+  \   fzf#vim#with_preview(), <bang>0)
 
 " Use <C-l> for trigger snippet expand.
 imap <C-l> <Plug>(coc-snippets-expand)
