@@ -40,6 +40,12 @@ Plug 'morhetz/gruvbox'
 " Use release branch (recommend)
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+" Use JSX
+Plug 'MaxMEllon/vim-jsx-pretty'
+
+" Use emmet
+Plug 'mattn/emmet-vim'
+
 Plug 'ianks/vim-tsx'
 
 "" VIM TSX
@@ -59,6 +65,10 @@ Plug 'ferrine/md-img-paste.vim'
 
 " Comments
 Plug 'preservim/nerdcommenter'
+
+Plug 'jcfaria/vim-r-plugin'
+
+Plug 'ferrine/md-img-paste.vim'
 
 " Initialize plugin system
 call plug#end()
