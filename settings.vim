@@ -28,7 +28,8 @@ autocmd TermOpen * setlocal nonu
 colorscheme gruvbox
 
 " highlights (:help highlight)
-set foldcolumn=1
+" Source for column names https://vim.fandom.com/wiki/Xterm256_color_names_for_console_Vim
+"set foldcolumn=1
 hi LineNr ctermbg=16
 hi FoldColumn ctermbg=16
 
