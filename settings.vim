@@ -30,7 +30,17 @@ colorscheme gruvbox
 " highlights (:help highlight)
 set foldcolumn=1
 hi LineNr ctermbg=16
- hi FoldColumn ctermbg=16
+hi FoldColumn ctermbg=16
+
+" Configure the sign column (whre sign errors are displayed at the left side
+" of the editor)
+hi SignColumn ctermbg=16 ctermfg=16
+hi SyntasticErrorSign ctermbg=160 ctermfg=16
+hi SyntasticWarningSign ctermbg=172 ctermfg=16
+hi GruvboxRedSign ctermbg=160 ctermfg=16 guifg=white guibg=red
+hi GruvboxYellowSign ctermbg=172 ctermfg=16 guifg=white guibg=red
+set signcolumn=yes " Always show the sign column
+
 hi VertSplit ctermbg=16 ctermfg=16
 "hi foldcolumn ctermbg=16 ctermfg=16
 
