@@ -70,5 +70,22 @@ Plug 'jcfaria/vim-r-plugin'
 
 Plug 'ferrine/md-img-paste.vim'
 
+" VueJS
+Plug 'posva/vim-vue'
+
+Plug 'leafOfTree/vim-vue-plugin'
+
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'yarn install',
+  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
+
+
+
+
+
+
+
+
+
 " Initialize plugin system
 call plug#end()
