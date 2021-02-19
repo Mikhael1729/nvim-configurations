@@ -59,16 +59,12 @@ Plug 'numkil/ag.nvim'
 
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
-Plug 'tpope/vim-surround'
-
-Plug 'ferrine/md-img-paste.vim'
+"Plug 'tpope/vim-surround'
 
 " Comments
 Plug 'preservim/nerdcommenter'
 
 Plug 'jcfaria/vim-r-plugin'
-
-Plug 'ferrine/md-img-paste.vim'
 
 " VueJS
 Plug 'posva/vim-vue'

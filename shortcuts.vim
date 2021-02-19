@@ -55,6 +55,7 @@ nnoremap <silent> <leader>ec :e $MYVIMRC<CR>
 :imap wj <Esc>
 " Press i to enter insert mode, and ii to exit.
 :imap ii <Esc>
+
 " Pressing Ctrl-L leaves insert mode in evim, so why not in regular vim, too.
 :imap <C-L> <Esc>
 " This is a variation on the previous mapping that checks for evim
@@ -68,6 +69,7 @@ nnoremap <silent> <leader>ec :e $MYVIMRC<CR>
 :inoremap <expr> <C-L> (pumvisible() <bar><bar> &insertmode) ? '<C-L>' : '<Esc>'
 " Use backtick.
 :imap ` <Esc>
+
 " Two semicolons are easy to type.
 :imap ;; <Esc>
 " Press Shift-Space (may not work on your system).
