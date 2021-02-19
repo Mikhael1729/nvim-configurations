@@ -42,7 +42,6 @@ inoremap <silent><expr> <TAB>
 nnoremap <C-b> :NERDTreeToggle<CR>
 nnoremap <C-p> :Files<CR>
 nnoremap <C-g> :GFiles<CR>
-nnoremap <C-f> :Ag<CR>
 nnoremap <silent> <leader>ec :e $MYVIMRC<CR>
 
 " Can be typed even faster than jj, and if you are already in
@@ -131,6 +130,8 @@ nmap <leader>rn <Plug>(coc-rename)
 " Formatting selected code.
 xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
+xmap <leader>r  <Plug>(coc-format)
+nmap <leader>r  <Plug>(coc-format)
 
 " noremap <silent> k gk
 " noremap <silent> j gj
