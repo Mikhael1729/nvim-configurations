@@ -75,5 +75,9 @@ Plug 'prettier/vim-prettier', {
   \ 'do': 'yarn install',
   \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
 
+Plug 'ryanoasis/vim-devicons'
+
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+
 " Initialize plugin system
 call plug#end()

@@ -77,3 +77,13 @@ let g:pymode_indent = v:false
 let g:with_spaces = "true" " Defines the default mode for indentation (if true: use spaces else tabs)
 
 let g:bind_windows = "false"
+
+"let g:WebDevIconsUnicodeDecorateFolderNodes = 0
+"let g:DevIconsEnableFoldersOpenClose = 0
+"let g:DevIconsEnableFolderPatternMatching = 0
+"let g:DevIconsEnableFolderExtensionPatternMatching = 0
+
+let g:WebDevIconsNerdTreeBeforeGlyphPadding = ''
+let g:WebDevIconsUnicodeDecorateFolderNodes = v:true
+let g:NERDTreeDirArrowExpandable = "\u00a0"
+let g:NERDTreeDirArrowCollapsible = "\u00a0"
