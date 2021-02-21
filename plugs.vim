@@ -38,7 +38,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'morhetz/gruvbox'
 
 " Use release branch (recommend)
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'tag': 'v0.0.78'}
 
 " Use JSX
 Plug 'MaxMEllon/vim-jsx-pretty'

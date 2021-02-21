@@ -22,7 +22,7 @@ let g:python_host_prog = '/usr/bin/python3'
 "let g:python3_host_prog = 'C:\\Users\Mikhael\\AppData\\Local\\Programs\\Python\\Python36\\python'
 
 " coc extensions
-let g:coc_global_extensions = ['coc-tslint-plugin', 'coc-tsserver', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-yank', 'coc-prettier', 'coc-pairs', 'coc-snippets', 'coc-vetur']
+let g:coc_global_extensions = ['coc-tslint-plugin', 'coc-tsserver', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-yank', 'coc-prettier', 'coc-pairs', 'coc-snippets', 'coc-vetur', 'coc-eslint@1.3.2']
 
 let g:ackprg = 'ag --nogroup --nocolor --column'
 " SHORTCUTS
