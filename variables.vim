@@ -21,8 +21,16 @@ let g:python_host_prog = '/usr/bin/python3'
 "let g:python_host_prog  = 'C:\\Users\Mikhael\\AppData\\Local\\Programs\\Python\\Python36\\python'
 "let g:python3_host_prog = 'C:\\Users\Mikhael\\AppData\\Local\\Programs\\Python\\Python36\\python'
 
-" coc extensions
-let g:coc_global_extensions = ['coc-tslint-plugin', 'coc-tsserver', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-yank', 'coc-prettier', 'coc-pairs', 'coc-snippets', 'coc-vetur', 'coc-eslint@1.3.2']
+"coc-snippets 2.4.0 ~/.config/coc/extensions/node_modules/coc-snippets                                                                                     
+"coc-prettier 1.1.21 ~/.config/coc/extensions/node_modules/coc-prettier
+"coc-pairs 1.2.22 ~/.config/coc/extensions/node_modules/coc-pairs
+"coc-html 1.4.1 ~/.config/coc/extensions/node_modules/coc-html
+"coc-eslint 1.4.5 ~/.config/coc/extensions/node_modules/coc-eslint
+"coc-emmet 1.1.6 ~/.config/coc/extensions/node_modules/coc-emmet
+"coc-vetur 1.2.3 ~/.config/coc/extensions/node_modules/coc-vetur
+"coc-tsserver 1.6.8 ~/.config/coc/extensions/node_modules/coc-tsserver
+"coc-tslint-plugin 1.2.0 ~/.config/coc/extensions/node_modules/coc-tslint-plugin 
+"coc-python 1.2.13 ~/.config/coc/extensions/node_modules/coc-python
 
 let g:ackprg = 'ag --nogroup --nocolor --column'
 " SHORTCUTS
