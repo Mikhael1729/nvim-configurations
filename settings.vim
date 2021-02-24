@@ -50,3 +50,6 @@ hi Normal ctermbg=none guibg=none
 hi StatusLine cterm=none ctermbg=none ctermfg=239
 hi StatusLineNC cterm=none ctermbg=none ctermfg=236
 hi LineNr ctermbg=none ctermfg=236
+
+hi CursorLine cterm=NONE ctermbg=233
+set cursorline
