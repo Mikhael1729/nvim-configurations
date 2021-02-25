@@ -40,7 +40,8 @@ hi SyntasticErrorSign ctermbg=160 ctermfg=16
 hi SyntasticWarningSign ctermbg=172 ctermfg=16
 hi GruvboxRedSign ctermbg=160 ctermfg=16 guifg=white guibg=red
 hi GruvboxYellowSign ctermbg=172 ctermfg=16 guifg=white guibg=red
-set signcolumn=yes " Always show the sign column
+"set signcolumn=yes:1 " Always show the sign column
+"set number
 
 hi VertSplit ctermbg=16 ctermfg=16
 "hi foldcolumn ctermbg=16 ctermfg=16
@@ -53,3 +54,7 @@ hi LineNr ctermbg=none ctermfg=236
 
 hi CursorLine cterm=NONE ctermbg=233
 set cursorline
+
+set nu
+set signcolumn=no
+sign define coc_err numhl=coc_err_hi
