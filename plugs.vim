@@ -79,5 +79,7 @@ Plug 'ryanoasis/vim-devicons'
 
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
+Plug 'tpope/vim-surround'
+
 " Initialize plugin system
 call plug#end()
