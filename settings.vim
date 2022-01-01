@@ -18,7 +18,8 @@ set autoindent    " Copy indent from current line when starting a new line.
 set smarttab      " Inserts blanks on a <Tab> key (as per sw, ts and sts).
 
 filetype plugin on
-autocmd FileType python setlocal noexpandtab shiftwidth=2 softtabstop=0
+autocmd FileType python setlocal expandtab autoindent smarttab tabstop=2 shiftwidth=2 softtabstop=0
+autocmd BufNewFile,BufRead *.py setlocal expandtab autoindent smarttab tabstop=2 shiftwidth=2 softtabstop=0
 
 " Don't show line numbers in terminal mode.
 autocmd TermOpen * setlocal nonu

@@ -49,6 +49,7 @@ nnoremap <silent> <leader>ec :e $MYVIMRC<CR>
 :imap jk <Esc>
 :imap ññ <Esc>
 :imap kj <Esc>
+
 " If want to avoid jk in certain languages can use:
 " (and to make it where order doesn't matter, the second mapping also)
 :imap jw <Esc>
@@ -176,3 +177,21 @@ vnoremap <Leader>y "+y
 vnoremap <Leader>p "+p
 
 nnoremap <C-x> :call BindAllWindows()<CR>
+nnoremap <C-s> :CocCommand eslint.executeAutofix<CR>
+
+" Go debuggin
+let g:vimspector_enable_mappings = 'HUMAN'
+nmap <leader>vl :call vimspector#Launch()<CR>
+nmap <leader>vr :VimspectorReset<CR>
+nmap <leader>ve :VimspectorEval
+nmap <leader>vw :VimspectorWatch
+nmap <leader>vo :VimspectorShowOutput
+nmap <leader>vi <Plug>VimspectorBalloonEval
+xmap <leader>vi <Plug>VimspectorBalloonEval
+
+" for normal mode - the word under the cursor
+nmap <Leader>di <Plug>VimspectorBalloonEval
+" for visual mode, the visually selected text
+xmap <Leader>di <Plug>VimspectorBalloonEval
+
+let g:vimspector_install_gadgets = [ 'debugpy', 'vscode-go', 'CodeLLDB', 'vscode-node-debug2' ]

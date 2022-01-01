@@ -1,16 +1,19 @@
 {
   "suggest.autoTrigger": "none",
   "python.jediEnabled": false,
+  "python.formatting.autopep8Args": [
+    "--indent-size=2"
+  ],
   "prettier.tabWidth": 2,
+  "eslint.options": {
+    "rules": {
+      "no-debugger": "on"
+    }
+  },
   "languageserver": {
     "ccls": {
       "command": "ccls",
-      "filetypes": [
-        "c",
-        "cpp",
-        "objc",
-        "objcpp"
-      ],
+      "filetypes": ["c", "cpp", "objc", "objcpp"],
       "rootPatterns": [
         ".ccls",
         "compile_commands.json",
@@ -29,3 +32,4 @@
     }
   }
 }
+

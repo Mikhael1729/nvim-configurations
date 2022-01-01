@@ -95,3 +95,12 @@ let g:WebDevIconsNerdTreeBeforeGlyphPadding = ''
 let g:WebDevIconsUnicodeDecorateFolderNodes = v:true
 let g:NERDTreeDirArrowExpandable = "\u00a0"
 let g:NERDTreeDirArrowCollapsible = "\u00a0"
+
+let g:LanguageClient_serverCommands = {
+    \ 'vue': ['vls']
+    \ }
+
+let g:goyo_height = '100%'
+
+" Go
+let g:go_fmt_autosave = 0
