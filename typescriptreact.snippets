@@ -24,73 +24,206 @@
 #
 # Online reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
 
-snippet in "create interface" b
+snippet rts "React TypeScript with MUI Styles" b
+import { Theme, makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme: Theme) => ({
+  $1
+}));
+endsnippet
+
+snippet ti "create interface" b
 interface $1 {
 }
 endsnippet
 
-snippet cfc "const FunctionalComponent: FC<any> = () => {}" b
+snippet rtcni "React TypeScript constant component without interface" b
 import React, { FC } from "react";
 
-interface ${1}Props { 
-}
+const $1: FC = () => {
+  return (
+    <>
+      $2
+    </>
+  );
+};
 
-const $1: FC<${1}Props> = (props) => {
-	const { children } = props;
-
-	return (
-		<>
-			$2
-		</>
-	);
-}
-
-export default ${1}
+export default ${1};
 endsnippet
 
-snippet cfcni "Functional component without interface" b
+snippet rtcnis "React TypeScript Constant with No Interface and with Styles"
 import React, { FC } from "react";
+import { createStyles, Theme, makeStyles } from "@material-ui/core/styles";
 
-const $1: FC<any> = (props) => {
-	const { children } = props;
+const $1: FC = () => {
+  const classes = useStyles();
 
-	return (
-		<>
-			$2
-		</>
-	);
-}
+  return (
+    <div>
+      $2
+    </div>
+  );
+};
 
-export default ${1}
+const useStyles = makeStyles((theme: Theme) => 
+  createStyles({})
+);
+
+export default $1;
 endsnippet
 
-snippet cfcws "Functional component with MUI styles" b
+snippet rtcs "React TypeScript constant component with MUI styles" b
+import { makeStyles } from "@material-ui/core/styles";
 import React, { FC } from "react";
-import { makeStyles, Theme } from "@material-ui/core/styles";
 
-const useStyles = makeStyles((theme: Theme) => ({
-}))
+interface ${1}Props {}
 
-interface ${1}Props { 
+const ${1}: FC<${1}Props> = (props) => {
+  const classes = useStyles();
+
+  return (
+    <div>
+      $2
+    </div>
+	);
+};
+
+const useStyles = makeStyles({});
+
+export default ${1};
+endsnippet
+
+snippet rtc "React TypeScript constant component" b
+import React, { FC } from "react";
+
+interface ${1}Props {}
+
+const Rols: FC<${1}Props> = (props) => {
+  return (
+    <div>
+      $2
+    </div>
+	);
+};
+
+export default ${1};
+endsnippet
+
+snippet rtf "React TypeScript constant component" b
+import React, { FC } from "react";
+
+interface ${1}Props {}
+
+export default function Rols(${1}Props) => {
+  return (
+    <div>
+      $2
+    </div>
+	);
 }
+endsnippet
 
-const $1: FC<${1}Props> = (props) => {
-	const { children } = props;
-	const classes = useStyles();
+snippet rtfs "React TypeScript constant component" b
+import { makeStyles } from "@material-ui/core/styles";
+import React, { FC } from "react";
 
-	return (
-		<>
-			$2
-		</>
+interface ${1}Props {}
+
+export default function Rols(${1}Props) => {
+  const classes = useStyles();
+
+  return (
+    <div>
+      $2
+    </div>
 	);
 }
 
-export default ${1}
+const useStyles = makeStyles({});
 endsnippet
 
 snippet ec "Export component" b
 import ${1} from "./${1}";
 
 export { ${1} };
+export default $1;
+endsnippet
+
+snippet pcs "Functional component with MUI styles" b
+import { createStyles, makeStyles } from "@material-ui/styles";
+import { FunctionalComponent, h } from "preact";
+
+export interface $1Props {
+  name: TimeMeasureType;
+}
+
+const useStyles = makeStyles(
+  createStyles({
+    container: {},
+  })
+);
+
+const $1: FunctionalComponent<$1Props> = () => {
+  const classes = useStyles();
+
+  return (
+    <div className={classes.container}>
+      $2
+    </div>
+  );
+};
+
+export default $1;
+endsnippet
+
+snippet rtng "React NextJS Props"
+import { NextPage } from "next";
+
+interface $1Props {}
+
+const $1: NextPage<$1Props> = (props) => {
+  return (
+    <div>
+      $2
+    </div>
+  );
+};
+
+$1.getInitialProps = async({ req }) => {}
+
+export default $1;
+endsnippet
+
+
+snippet rtn "React NextJS Props"
+import { NextPage } from "next";
+
+const $1: NextPage = () => {
+  return (
+    <div>
+      $2
+    </div>
+  );
+};
+
+export default $1;
+endsnippet
+
+snippet rtns "React NextJS Props"
+import { makeStyles } from "@material-ui/core/styles";
+import { NextPage } from "next";
+
+const $1: NextPage = () => {
+  const classes = useStyles();
+
+  return (
+    <div>
+      $2
+    </div>
+  );
+};
+
+const useStyles = makeStyles((theme) => ({}));
+
 export default $1;
 endsnippet

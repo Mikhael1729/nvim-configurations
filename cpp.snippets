@@ -1,0 +1,58 @@
+# A valid snippet should starts with:
+#
+#		snippet trigger_word [ "description" [ options ] ]
+#
+# and end with:
+#
+#		endsnippet
+#
+# Snippet options:
+#
+#		b - Beginning of line.
+#		i - In-word expansion.
+#		w - Word boundary.
+#		r - Regular expression
+#		e - Custom context snippet
+#		A - Snippet will be triggered automatically, when condition matches.
+#
+# Basic example:
+#
+#		snippet emitter "emitter properties" b
+#		private readonly ${1} = new Emitter<$2>()
+#		public readonly ${1/^_(.*)/$1/}: Event<$2> = this.$1.event
+#		endsnippet
+#
+# Online reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
+snippet cpph "C++ Hello World" b
+#include <iostream>
+
+using namespace std;
+
+int main() {
+  $1
+
+  return 0;
+}
+endsnippet
+
+snippet cppf "C++ for loop" b
+for (int $1 = 0; $1 < $2; $1++) {
+  $3
+}
+endsnippet
+
+snippet cppp "C++ print" b
+cout << "---" << endl;
+for (int i = 0; i < $1; i++) {
+  cout << $2[i];
+}
+cout << "\n---" << endl;
+endsnippet
+
+snippet cpppl "C++ print with end line" b
+cout << "---" << endl;
+for (int i = 0; i < $1; i++) {
+  cout << $2[i] << endl;
+}
+cout << "\n---" << endl;
+endsnippet
